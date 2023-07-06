@@ -1,0 +1,99 @@
+{
+    
+    "C_Cpp.errorSquiggles": "disabled",
+    
+    "workbench.colorTheme": "Discord Theme (Dark)",
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    
+    "workbench.editorAssociations": {
+        "*.html": "default",
+        "*.cpp": "default",
+        "*.exe": "default",
+        "*.pyc": "default"
+    },
+    "liveServer.settings.donotShowInfoMsg": true,
+    "[html]": {
+        "editor.defaultFormatter": "mohd-akram.vscode-html-format"
+    },
+    "launch": {
+
+        "configurations": [],
+        "compounds": []
+    },
+    
+    "background.style": 
+    {
+        "pointer-events": "none",
+        //"position": "abandoned",
+        "z-index": "9",
+        "background-size": "cover",
+        "width": "100%",
+        "height": "100%",
+        
+        "margin-left":"0%",
+        "background-position": "center",
+        "background-repeat": "repeat",
+        "opacity": 0.1
+    },
+    "problems.showCurrentInStatus": true,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    
+
+    "files.autoSave": "afterDelay",
+    // "background.": false,
+    "background.useFront": true,
+    "background.customImages": 
+    [
+        "https://cdn.discordapp.com/attachments/1018816847333822474/1113819721125593128/20230131_223654010_iOS.jpg",
+        "https://cdn.discordapp.com/attachments/1018816847333822474/1113819721125593128/20230131_223654010_iOS.jpg",
+        "https://cdn.discordapp.com/attachments/1018816847333822474/1082588430464188487/moi.jpg",
+        "https://cdn.discordapp.com/attachments/1018816847333822474/1082588430464188487/moi.jpg"
+    ],
+
+    
+    "code-runner.runInTerminal": true,
+    "code-runner.showRunCommandInExplorerContextMenu": false,
+    "code-runner.showRunCommandInEditorContextMenu": true,
+    "code-runner.showRunIconInEditorTitleMenu": true,
+    "code-runner.showStopIconInEditorTitleMenu": true,
+    "code-runner.saveAllFilesBeforeRun": true,
+    "code-runner.saveFileBeforeRun": true,
+    "[python]": 
+    {
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.wordBasedSuggestions": false,
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+
+    
+    "python.testing.pytestArgs": [
+        "."
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.formatting.provider": "none",
+    "files.associations": {
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "*.tcc": "cpp",
+        "iomanip": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "format": "cpp",
+        "initializer_list": "cpp",
+        "ranges": "cpp",
+        "span": "cpp",
+        "stacktrace": "cpp",
+        "regex": "cpp",
+        "valarray": "cpp"
+    }
+
+
+}
