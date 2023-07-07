@@ -1,7 +1,7 @@
 # ---------- đây là các setup của bot ----------
 
 # import discord
-from collections import defaultdict
+from collections import defaultdict,deque
 from main_bot.support import *
 from src.aclient import *
 import openai
@@ -27,5 +27,26 @@ timee = get_time()
 
 notifi_room = defaultdict(def_value)
 notifi_room = kurru
+
+def moi():
+  return deque([])
+
+music_current_queue = defaultdict(moi)
+'''
+    In music_current_queue:
+    
+    Left Queue  ||  music_current_queue  ||  Right Queue
+    
+      first------------------------------------Second
+'''
+
+music_previous_queue = defaultdict(moi)
+'''
+    In music_previous_queue:
+    
+    Left Queue  ||  music_previous_queue  ||  Right Queue
+    
+      first-------------------------------------Second
+'''
 
 

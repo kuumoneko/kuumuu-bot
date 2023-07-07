@@ -50,14 +50,14 @@ async def add_to_queue(ctx: discord.Interaction , url: str = None , query: str =
         await ctx.response.send_message("https://www.youtube.com/watch?v=" + video_ids[0])
         url = "https://www.youtube.com/watch?v=" + video_ids[0]
         
-        music_queue[ctx.user].put(url)
-        print(music_queue[ctx.user].qsize())
+        music_current_queue[ctx.guild].append(url)
+        print(len (music_current_queue[ctx.guild]))
         return
         
     elif url != None:
         await ctx.response.send_message(url)    
-        music_queue[ctx.user].put(url)
-        print(music_queue[ctx.user].qsize())
+        music_current_queue[ctx.guild].append(url)
+        print(len (music_current_queue[ctx.guild]))
         return
     else:
         embeb.add_field(name="Warning:" , value=f'Please use youtube_url or query to search on youtube!')
@@ -73,3 +73,11 @@ async def resume_music(ctx: discord.Interaction):
         
 async def stop_music(ctx: discord.Interaction):
     await stopping_music(ctx)
+    
+async def next_track(ctx: discord.Interaction):
+    await nextting_music(ctx)
+    pass
+
+async def previous_track(ctx : discord.Interaction):
+    await previousing_music(ctx)
+    pass

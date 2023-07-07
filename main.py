@@ -160,6 +160,14 @@ async def resume(ctx: discord.Interaction):
 async def stop(ctx: discord.Interaction):
     await stop_music(ctx)
     await disconnect(ctx)
+    
+@kclient.tree.command(name="ntrack" , description="Play next track in queue")
+async def ntrack(ctx: discord.Interaction):
+    await next_track(ctx)
+
+@kclient.tree.command(name="ptrack" , description="Play previous track in queue")
+async def ptrack(ctx: discord.Interaction):
+    await previous_track(ctx)
         
 # ------- Main Bot ---------
 
