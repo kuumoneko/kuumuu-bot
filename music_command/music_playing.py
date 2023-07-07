@@ -23,20 +23,10 @@ async def playing_music(ctx: discord.Interaction):
         
     while len(curr_list) != 0:
         
-        print(curr_list)
-        print(pre_list)
-        print(" ")
-        
         if(voice_clientt.is_connected() == False):
-            print("lmao")
             return
             
         url = curr_list[0]
-        
-        
-        
-            
-        print(len(curr_list))
         
         song = pafy.new(url=url)  # creates a new pafy object
         audio = song.getbestaudio()  # gets an audio source
@@ -56,8 +46,6 @@ async def playing_music(ctx: discord.Interaction):
 
 async def pausing_music(ctx: discord.Interaction):
     voice_clientt = await connecting(ctx= ctx)
-
-    print("voice_clientt ", voice_clientt.is_playing() , " playing")
     
     if voice_clientt.is_playing():
         voice_clientt.pause()
@@ -66,8 +54,6 @@ async def pausing_music(ctx: discord.Interaction):
 
 async def resuming_music(ctx: discord.Interaction):
     voice_clientt = await connecting(ctx= ctx)
-        
-    print("voice_clientt ", voice_clientt.is_paused() , " paused")
     
     if voice_clientt.is_paused():
         voice_clientt.resume()
@@ -76,8 +62,6 @@ async def resuming_music(ctx: discord.Interaction):
 
 async def stopping_music(ctx : discord.Interaction):
     voice_clientt = await connecting(ctx= ctx)
-        
-    print("voice_clientt ", voice_clientt.is_paused() , " paused")
     if (voice_clientt.is_playing()):
         voice_clientt.stop()
     
