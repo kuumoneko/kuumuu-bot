@@ -12,6 +12,7 @@ from moderator_command.unban import *
 from music_command.music_command import*
 
 
+
 # --------- Utility Command ---------
 
 @kclient.tree.command(name="news")
@@ -205,4 +206,5 @@ async def on_message(ctx : discord.Interaction):
 
 if __name__ == '__main__':    
     # music_command.setup(kclient)
-    kclient.run(BOT_TOKEN)
+    kclient.run(config.BOT_TOKEN)
+    pass

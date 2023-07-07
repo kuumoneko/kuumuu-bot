@@ -62,7 +62,7 @@ async def help_command(ctx : discord.Interaction , command_helped : str = None):
         for i in music_temp:
             temp = f'{i}'
             temp = "`" + temp + "`"
-            kuumo = kuumo + temp
+            kuumo = kuumo + f" {temp} "
         help_embeb.add_field(name=f'Music:' , value=kuumo , inline=False)
         
 

@@ -11,7 +11,7 @@ from datetime import *
 # from src.personas import PERSONAS
 import sys
 from pkg_resources import PkgResourcesDeprecationWarning
-
+# import D.somedata
 
 #---------- Note: 0x = # ----------
 prefix = ";"

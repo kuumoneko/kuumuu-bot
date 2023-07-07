@@ -28,7 +28,7 @@ from queue import Queue
 from discord.ui import *
 from typing import Union, List
 from src import log, art, personas, responses
-from src import responses
+from src import responses,log
 from src.log import logger
 from dotenv import load_dotenv
 from discord import app_commands
@@ -38,15 +38,27 @@ from revChatGPT.V1 import AsyncChatbot
 from Bard import Chatbot as BardChatbot
 from EdgeGPT.EdgeGPT import Chatbot as EdgeChatbot
 from src.auto_login.AutoLogin import MicrosoftBingAutoLogin
-from kuumuu_data.config import *
+# from kuumuu_data.config import *
 
 load_dotenv()
+
+
 
 scope = "user-library-read"
 
 config_dir = os.path.abspath(f"{__file__}/../../")
 prompt_name = 'kuumuu_data/system_prompt.txt'
 prompt_path = os.path.join(config_dir, prompt_name)
+
+
+sys.path.append('D:\\')
+
+# import somedata.config
+sys.path.append(os.path.abspath(os.path.join( os.path.pardir , 'somedata')))
+# print (sys.path)
+import config
+
+
 with open(prompt_path, "r", encoding="utf-8") as f:
     prompt = f.read()
     
@@ -82,8 +94,8 @@ class aclient(discord.Client):
         
     
         # print(self.spotify_id)
-        self.bing_account = BING_ACCOUNT
-        self.bing_password = BING_PASSWORD
+        self.bing_account = config.BING_ACCOUNT
+        self.bing_password = config.BING_PASSWORD
         MicrosoftBingAutoLogin(
             self.bing_account, self.bing_password, chrome_version).dump_cookies()
 
