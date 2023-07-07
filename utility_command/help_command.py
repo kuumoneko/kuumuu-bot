@@ -17,7 +17,7 @@ async def help_command(ctx : discord.Interaction , command_helped : str = None):
     mod_temp = ["ban" , "unban" , "timeout" , "untimeout" , "kick" , "chnick" , "chrole"]
     uti_temp = ["ping" , "setnotice" , "news" , "trans" , "hello"]
     AI_temp  = ["chat"]
-    music_temp = ["join" , "leave" , "playsp" , "play" , "pause" , "resume" , "stop"]
+    music_temp = ["join" , "leave" , "aque" , "play" , "pause" , "resume" , "stop"]
     
 
     if command_helped == None:
@@ -62,7 +62,7 @@ async def help_command(ctx : discord.Interaction , command_helped : str = None):
         for i in music_temp:
             temp = f'{i}'
             temp = "`" + temp + "`"
-            kuump = kuumo + temp
+            kuumo = kuumo + temp
         help_embeb.add_field(name=f'Music:' , value=kuumo , inline=False)
         
 

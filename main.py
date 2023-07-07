@@ -17,9 +17,9 @@ from music_command.music_command import*
 @kclient.tree.command(name="news")
 async def news(ctx : discord.Interaction):
     embeb = discord.Embed(title='' , color= get_kuumo_color(kuumo_color))
-    temp = "`0.1.3`"
+    temp = "`0.1.4`"
     embeb.add_field(name='' , value= f'Kuumuu Client {temp} ' , inline= False)
-    embeb.add_field(name='' , value=f'Add Music Play with Youtube')
+    embeb.add_field(name='' , value=f'Add some command and Fix some bug')
     await ctx.response.send_message(embed=embeb)
 
 @kclient.tree.command(name="ping" , description="Check client's ping")
@@ -133,28 +133,32 @@ async def chat(ctx: discord.Interaction, *, message: str):
 
 @kclient.tree.command(name="join" , description="Connect to a voice channel")
 async def join(ctx : discord.Interaction):
-    await connect(ctx= ctx)
+    await connect(ctx)
 
 @kclient.tree.command(name="leave" , description="Disconnect from a voice channel")
 async def leave(ctx : discord.Interaction):
-    await disconnect(ctx= ctx)
+    await disconnect(ctx)
     
-
 @kclient.tree.command(name="play" , description="Play a music")  
-async def play(ctx: discord.Interaction, url:str = None , query : str = None):
-    await play_music(ctx= ctx , url= url , query= query)
+async def play(ctx: discord.Interaction):
+    await play_music(ctx)
+    
+@kclient.tree.command(name="aque" , description="Add music to your queue")
+async def aque(ctx : discord.Interaction , url: str = None , query:str = None):
+    await add_to_queue(ctx , url , query)
     
 @kclient.tree.command(name='pause', description='This command pauses the song')
 async def pause(ctx: discord.Interaction):
-    await pause_music(ctx= ctx)
+    await pause_music(ctx)
     
 @kclient.tree.command(name='resume', description='Resumes the song')
 async def resume(ctx: discord.Interaction):
-    await resume_music(ctx= ctx)
+    await resume_music(ctx)
     
 @kclient.tree.command(name='stop', description='Stops the song')
 async def stop(ctx: discord.Interaction):
-    await stop_music(ctx= ctx)
+    await stop_music(ctx)
+    await disconnect(ctx)
         
 # ------- Main Bot ---------
 
