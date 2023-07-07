@@ -1,23 +1,23 @@
 [
   {
     "domain": ".bing.com",
-    "expiry": 1723188026,
+    "expiry": 1723258777,
     "httpOnly": false,
     "name": "SRCHUSR",
     "path": "/",
     "sameSite": "None",
     "secure": true,
-    "value": "DOB=20230706&T=1688628023000&TPC=1688628026000"
+    "value": "DOB=20230707&T=1688698775000&TPC=1688698777000"
   },
   {
     "domain": ".bing.com",
-    "expiry": 1720250426,
+    "expiry": 1720321177,
     "httpOnly": false,
     "name": "_RwBf",
     "path": "/",
     "sameSite": "None",
     "secure": true,
-    "value": "ilt=1&ihpd=0&ispd=1&rc=3&rb=0&gb=0&rg=200&pc=0&mtu=0&rbb=0&g=0&cid=&clo=0&v=1&l=2023-07-06T07:00:00.0000000Z&lft=0001-01-01T00:00:00.0000000&aof=0&o=2&p=&c=&t=0&s=0001-01-01T00:00:00.0000000+00:00&ts=2023-07-06T07:20:25.3672409+00:00&rwred=0&wls=&lka=0&lkt=0&TH=&dci=0"
+    "value": "ilt=1&ihpd=0&ispd=1&rc=3&rb=0&gb=0&rg=200&pc=0&mtu=0&rbb=0&g=0&cid=&clo=0&v=1&l=2023-07-06T07:00:00.0000000Z&lft=0001-01-01T00:00:00.0000000&aof=0&o=2&p=&c=&t=0&s=0001-01-01T00:00:00.0000000+00:00&ts=2023-07-07T02:59:36.8413947+00:00&rwred=0&wls=&lka=0&lkt=0&TH=&dci=0"
   },
   {
     "domain": ".bing.com",
@@ -26,51 +26,51 @@
     "path": "/",
     "sameSite": "None",
     "secure": true,
-    "value": "SID=114A0459964E64023776171F97286527&R=3&RB=0&GB=0&RG=200&RP=0"
+    "value": "SID=063BB29E7A86696D1F70A1D97B946854&R=3&RB=0&GB=0&RG=200&RP=0"
   },
   {
     "domain": ".bing.com",
-    "expiry": 1723188025,
+    "expiry": 1723258777,
     "httpOnly": true,
     "name": "USRLOC",
     "path": "/",
     "sameSite": "None",
     "secure": true,
-    "value": "HS=1&ELOC=LAT=13.792070388793945|LON=109.18182373046875|N=Ph%C6%B0%E1%BB%9Dng%20Nh%C6%A1n%20Ph%C3%BA%2C%20Binh%20Dinh|ELT=6|"
+    "value": "HS=1&ELOC=LAT=20.42658233642578|LON=106.16808319091797|N=Ph%C6%B0%E1%BB%9Dng%20B%C3%A0%20Tri%E1%BB%87u%2C%20Nam%20Dinh|ELT=1|"
   },
   {
     "domain": ".bing.com",
-    "expiry": 1723188024,
+    "expiry": 1723258776,
     "httpOnly": false,
     "name": "SRCHUID",
     "path": "/",
     "sameSite": "None",
     "secure": true,
-    "value": "V=2&GUID=2A9713B2538F414A8FBBA88CC5552FBB&dmnchg=1"
+    "value": "V=2&GUID=45764B515C954C75869A46F2BBC6E3F8&dmnchg=1"
   },
   {
     "domain": "www.bing.com",
-    "expiry": 1722324027,
+    "expiry": 1722394778,
     "httpOnly": true,
     "name": "MUIDB",
     "path": "/",
     "sameSite": "Lax",
     "secure": false,
-    "value": "0587BB9ED0B061A11183A8D8D1D660E1"
+    "value": "2573CBB129406B7B0290D8F628526AA0"
   },
   {
     "domain": ".bing.com",
-    "expiry": 1723188026,
+    "expiry": 1723258777,
     "httpOnly": false,
     "name": "SRCHHPGUSR",
     "path": "/",
     "sameSite": "None",
     "secure": true,
-    "value": "SRCHLANG=en&PV=10.0.0&BRW=XW&BRH=T&CW=1907&CH=1003&SCW=1890&SCH=3310&DPR=1.3&UTC=420&DM=0&HV=1688628026&WTS=63824224823"
+    "value": "SRCHLANG=en&PV=10.0.0&BRW=XW&BRH=T&CW=1904&CH=1001&SCW=1887&SCH=4293&DPR=1.0&UTC=420&DM=0&HV=1688698778&WTS=63824295575"
   },
   {
     "domain": ".bing.com",
-    "expiry": 1688671224,
+    "expiry": 1688741976,
     "httpOnly": true,
     "name": "SUID",
     "path": "/",
@@ -85,11 +85,11 @@
     "path": "/",
     "sameSite": "Lax",
     "secure": false,
-    "value": "F=1&SID=114A0459964E64023776171F97286527"
+    "value": "F=1&SID=063BB29E7A86696D1F70A1D97B946854"
   },
   {
     "domain": ".bing.com",
-    "expiry": 1722324024,
+    "expiry": 1722394776,
     "httpOnly": true,
     "name": "_EDGE_V",
     "path": "/",
@@ -108,7 +108,7 @@
   },
   {
     "domain": ".bing.com",
-    "expiry": 1723188024,
+    "expiry": 1723258776,
     "httpOnly": false,
     "name": "SRCHD",
     "path": "/",
@@ -118,12 +118,12 @@
   },
   {
     "domain": ".bing.com",
-    "expiry": 1722324024,
+    "expiry": 1722394776,
     "httpOnly": false,
     "name": "MUID",
     "path": "/",
     "sameSite": "None",
     "secure": true,
-    "value": "0587BB9ED0B061A11183A8D8D1D660E1"
+    "value": "2573CBB129406B7B0290D8F628526AA0"
   }
 ]
