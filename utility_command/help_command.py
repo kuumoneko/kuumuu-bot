@@ -17,7 +17,7 @@ async def help_command(ctx : discord.Interaction , command_helped : str = None):
     mod_temp = ["ban" , "unban" , "timeout" , "untimeout" , "kick" , "chnick" , "chrole"]
     uti_temp = ["ping" , "setnotice" , "news" , "trans" , "hello"]
     AI_temp  = ["chat"]
-    music_temp = ["join" , "leave" , "aque" , "play" , "pause" , "resume" , "stop"]
+    music_temp = ["join" , "leave" , "aque" , "play" , "pause" , "resume" , "stop" , "ntrack" , "ptrack"]
     
 
     if command_helped == None:
