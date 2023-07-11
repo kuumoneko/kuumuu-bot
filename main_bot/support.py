@@ -98,3 +98,41 @@ def get_kuumo_color(temp):
     return int( int(kurumu, 16))
 
 
+def change_time(string: str):
+
+    check_list = ["D" , "H" , "M" , "S"]
+    res = ""
+    
+    for char in check_list:
+        temp = string.find(char)
+        strtemp = ""
+        if temp == -1:
+            continue
+    
+        if (temp != -1):
+            strtemp = string[ (temp-3)  : (temp-len(string))   ]
+            
+        k = len(strtemp)-1
+        while(ord(strtemp[k]) >= 48 and ord(strtemp[k]) <= 57 and k > 0 ):
+            k-=1
+
+        for i in range (60 , 96):
+            strtemp = strtemp.strip(chr(i))
+        for i in range(97 , 123):
+            strtemp = strtemp.strip(chr(i))
+            
+        if k != 0:
+            strtemp = strtemp[  len(strtemp) - k  :  ]
+        
+        if strtemp != "":
+            if (char == "D"):
+                res += strtemp + " days "
+            if (char == "H"):
+                res += strtemp + " hours "
+            if (char == "M"):
+                res += strtemp + " minutes "
+            if (char == "S"):
+                res += strtemp + " seconds "
+    
+    return res
+

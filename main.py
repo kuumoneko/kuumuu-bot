@@ -18,9 +18,8 @@ from music_command.music_command import*
 @kclient.tree.command(name="news")
 async def news(ctx : discord.Interaction):
     embeb = discord.Embed(title='' , color= get_kuumo_color(kuumo_color))
-    temp = "`0.1.4`"
-    embeb.add_field(name='' , value= f'Kuumuu Client {temp} ' , inline= False)
-    embeb.add_field(name='' , value=f'Add some command and Fix some bug')
+    temp = "`0.6.0`"
+    embeb.add_field(name=f'Kuumuu Client {temp}' , value= f'Improve command `play`' , inline= False)
     await ctx.response.send_message(embed=embeb)
 
 @kclient.tree.command(name="ping" , description="Check client's ping")
@@ -140,14 +139,6 @@ async def join(ctx : discord.Interaction):
 async def leave(ctx : discord.Interaction):
     await disconnect(ctx)
     
-@kclient.tree.command(name="play" , description="Play a music")  
-async def play(ctx: discord.Interaction):
-    await play_music(ctx)
-    
-@kclient.tree.command(name="aque" , description="Add music to your queue")
-async def aque(ctx : discord.Interaction , url: str = None , query:str = None):
-    await add_to_queue(ctx , url , query)
-    
 @kclient.tree.command(name='pause', description='This command pauses the song')
 async def pause(ctx: discord.Interaction):
     await pause_music(ctx)
@@ -168,6 +159,14 @@ async def ntrack(ctx: discord.Interaction):
 @kclient.tree.command(name="ptrack" , description="Play previous track in queue")
 async def ptrack(ctx: discord.Interaction):
     await previous_track(ctx)
+    
+@kclient.tree.command(name="play" , description="Play a track")  
+async def play(ctx: discord.Interaction , url: str = None , query: str = None):
+    print(url != None or query != None)
+    if (url != None or query != None):
+        await add_to_queue(ctx , url , query)
+    
+    await play_music(ctx)
         
 # ------- Main Bot ---------
 

@@ -38,6 +38,9 @@ from revChatGPT.V1 import AsyncChatbot
 from Bard import Chatbot as BardChatbot
 from EdgeGPT.EdgeGPT import Chatbot as EdgeChatbot
 from src.auto_login.AutoLogin import MicrosoftBingAutoLogin
+import google_auth_oauthlib.flow
+import googleapiclient.discovery
+import googleapiclient.errors
 # from kuumuu_data.config import *
 
 load_dotenv()
@@ -57,7 +60,10 @@ sys.path.append('D:\\')
 sys.path.append(os.path.abspath(os.path.join( os.path.pardir , 'somedata')))
 # print (sys.path)
 import config
+# import client_secret_CLIENTID
 
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+scopes = ["https://www.googleapis.com/auth/youtube.readonly"]
 
 with open(prompt_path, "r", encoding="utf-8") as f:
     prompt = f.read()
@@ -77,11 +83,21 @@ class aclient(discord.Client):
         self.client = discord.Client(intents= intents)
         self.bot = commands.Bot(command_prefix=';' , intents= intents)
         
+        ''' Youtube '''
+        self.api_service_name = "youtube"
+        self.api_version = "v3"
+        self.client_secrets_file = "D:/somedata/client_secret_CLIENTID.json"
+        flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
+        self.client_secrets_file, scopes)
+    
+        self.credentials = flow.run_local_server()
+        self.ytb = googleapiclient.discovery.build(
+        self.api_service_name, self.api_version, credentials=self.credentials)
         
         self.load_extension = self.bot.load_extension
         self.tree = app_commands.CommandTree(self)
         
-        self.lavalink = lavalink.Client
+        # self.lavalink = lavalink.Client
         
         self.current_channel = None
         self.activity = discord.Activity(

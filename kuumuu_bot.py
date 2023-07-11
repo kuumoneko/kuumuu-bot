@@ -1,14 +1,11 @@
 # ---------- đây là các setup của bot ----------
 
-# import discord
 from collections import defaultdict,deque
 from main_bot.support import *
 from src.aclient import *
 import openai
 from main_bot.keep_alive import *
 from datetime import *
-# import src.personas
-# from src.personas import PERSONAS
 import sys
 from pkg_resources import PkgResourcesDeprecationWarning
 # import D.somedata
