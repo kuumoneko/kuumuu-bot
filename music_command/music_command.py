@@ -158,7 +158,7 @@ async def stop_music(ctx: discord.Interaction):
         music_current_queue[ctx.guild].popleft()
         
     while( len (music_previous_queue[ctx.guild]) > 0):
-        music_current_queue[ctx.guild].popleft()
+        music_previous_queue[ctx.guild].popleft()
     
     return   
     
