@@ -17,7 +17,7 @@ async def help_command(ctx : discord.Interaction , command_helped : str = None):
     mod_temp = ["ban" , "unban" , "timeout" , "untimeout" , "kick" , "chnick" , "chrole"]
     uti_temp = ["ping" , "setnotice" , "news" , "trans" , "hello"]
     AI_temp  = ["chat"]
-    music_temp = ["join" , "leave" , "play" , "pause" , "resume" , "stop" , "ntrack" , "ptrack"]
+    music_temp = ["join" , "leave" , "play" , "pause" , "resume" , "stop" , "ntrack" , "ptrack" , "setloop"]
     
 
     if command_helped == None:
@@ -109,6 +109,10 @@ async def help_command(ctx : discord.Interaction , command_helped : str = None):
                 moi = moi + ": A Youtube Url"
             elif i.name == "query":
                 moi = moi + ": A name you want to search on Youtube"
+            elif i.name == "list":
+                moi = moi + ": A Youtube List Url"
+            elif i.name == "loop":
+                moi = moi + ": Just True or False"
             
             moi = moi + chr(13)
             

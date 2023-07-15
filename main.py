@@ -1,4 +1,3 @@
-# from kuumuu_data.config import *
 
 from urllib.request import urlopen
 from kuumuu_bot import *
@@ -9,17 +8,17 @@ from utility_command.other_command import *
 from moderator_command.auto_mod_error import *
 import os
 from moderator_command.unban import *
-from music_command.music_command import*
 
 
 
 # --------- Utility Command ---------
 
-@kclient.tree.command(name="news")
-async def news(ctx : discord.Interaction):
-    embeb = discord.Embed(title='' , color= get_kuumo_color(kuumo_color))
-    temp = "`0.6.0`"
-    embeb.add_field(name=f'Kuumuu Client {temp}' , value= f'Improve command `play`' , inline= False)
+@kclient.tree.command(name="news" , description="News about this bot")
+async def news(ctx: discord.Interaction):
+    embeb = discord.Embed(title='' , color= await kclient.get_color())
+    temp = "`Beta 0.6.5`"
+    embeb.add_field(name=f'Kuumuu Client {temp} ' , 
+                    value=f'`Improve data storage`')
     await ctx.response.send_message(embed=embeb)
 
 @kclient.tree.command(name="ping" , description="Check client's ping")
@@ -133,40 +132,59 @@ async def chat(ctx: discord.Interaction, *, message: str):
 
 @kclient.tree.command(name="join" , description="Connect to a voice channel")
 async def join(ctx : discord.Interaction):
-    await connect(ctx)
+    await kclient.join(ctx)
 
 @kclient.tree.command(name="leave" , description="Disconnect from a voice channel")
 async def leave(ctx : discord.Interaction):
-    await disconnect(ctx)
+    await kclient.leave(ctx)
     
 @kclient.tree.command(name='pause', description='This command pauses the song')
 async def pause(ctx: discord.Interaction):
-    await pause_music(ctx)
+    await kclient.pause_music(ctx)
     
 @kclient.tree.command(name='resume', description='Resumes the song')
 async def resume(ctx: discord.Interaction):
-    await resume_music(ctx)
+    await kclient.resume_music(ctx)
     
 @kclient.tree.command(name='stop', description='Stops the song')
 async def stop(ctx: discord.Interaction):
-    await stop_music(ctx)
-    await disconnect(ctx)
+    id = kclient.get_id(ctx= ctx)
+    await kclient.stop_music(ctx= ctx , id = id)
+    await kclient.leave(ctx= ctx)
     
 @kclient.tree.command(name="ntrack" , description="Play next track in queue")
 async def ntrack(ctx: discord.Interaction):
-    await next_track(ctx)
+    id = kclient.get_id(ctx= ctx)
+    await kclient.next_track(ctx= ctx , id=id)
 
 @kclient.tree.command(name="ptrack" , description="Play previous track in queue")
 async def ptrack(ctx: discord.Interaction):
-    await previous_track(ctx)
+    id = kclient.get_id(ctx= ctx)
+    await kclient.previous_track(ctx=ctx , id= id)
     
 @kclient.tree.command(name="play" , description="Play a track")  
-async def play(ctx: discord.Interaction , url: str = None , query: str = None):
-    print(url != None or query != None)
-    if (url != None or query != None):
-        await add_to_queue(ctx , url , query)
+async def play(ctx: discord.Interaction , url: str = None , query: str = None , list:str = None):
+    await ctx.response.defer(thinking=True)
+    if ctx.user.voice.channel == None:
+        return
+    if (url != None or query != None or list != None):
+        await kclient.add_to_queue(ctx , url , query , list)
+        
+    id = kclient.get_id(ctx= ctx)
+    await ctx.followup.send("Playing...")
+    await kclient.play(ctx= ctx , id= id)
     
-    await play_music(ctx)
+    
+@kclient.tree.command(name="setloop" , description="Set repeating for your music")
+@app_commands.choices(loop=[
+        app_commands.Choice(name="True", value="True"),
+        app_commands.Choice(name="False", value="False")
+    ])
+async def setloop(ctx : discord.Interaction , loop : app_commands.Choice[str]):
+    if loop.value == "True":
+        kclient.is_loop[kclient.get_id(ctx= ctx)] = True
+    else:
+        kclient.is_loop[kclient.get_id(ctx= ctx)] = False
         
 # ------- Main Bot ---------
 
