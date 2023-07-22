@@ -2,7 +2,7 @@
     
     "C_Cpp.errorSquiggles": "disabled",
     
-    "workbench.colorTheme": "Discord Theme (Dark)",
+    "workbench.colorTheme": "Discord Theme",
     "terminal.integrated.enableMultiLinePasteWarning": false,
     
     "workbench.editorAssociations": {
@@ -12,9 +12,7 @@
         "*.pyc": "default"
     },
     "liveServer.settings.donotShowInfoMsg": true,
-    "[html]": {
-        "editor.defaultFormatter": "mohd-akram.vscode-html-format"
-    },
+    
     "launch": {
 
         "configurations": [],
@@ -62,7 +60,7 @@
     {
         "diffEditor.ignoreTrimWhitespace": false,
         "editor.wordBasedSuggestions": false,
-        "editor.defaultFormatter": "ms-python.autopep8"
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
 
     
