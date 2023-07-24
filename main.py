@@ -16,28 +16,28 @@ from moderator_command.unban import *
 @kclient.tree.command(name="news" , description="News about this bot")
 async def news(ctx: discord.Interaction):
     embeb = discord.Embed(title='' , color= await kclient.get_color())
-    temp = "`Beta 0.7.0`"
+    temp = "`Beta 0.6.5`"
     embeb.add_field(name=f'Kuumuu Client {temp} ' , 
                     value=f'`Improve data storage`')
     await ctx.response.send_message(embed=embeb)
 
 @kclient.tree.command(name="ping" , description="Check client's ping")
 async def ping(interaction : discord.Interaction):
-    await kclient.ulti.check_ping(interaction= interaction, ping=int((round(kclient.latency, 10)*1000)))
+    await check_ping(interaction= interaction, ping=int((round(kclient.latency, 10)*1000)))
 
 @kclient.tree.command(name="trans" , description= "Translate like google translate")
-async def trans(ctx : discord.Interaction, lang : str, string : str ):
-    await kclient.ulti.translate(interaction=ctx, lang=lang  , thing= string)
+async def trans(ctx : discord.Interaction, lang : str, * , string : str ):
+    await translate(interaction=ctx, lang=lang  , thing= string)
 
 @kclient.tree.command(name="hello" , description="Say hello to you or other member in your server")
 # @app_commands.describe(member = "What would you like to be called?")
 async def hello(ctx : discord.Interaction, member: discord.Member = None):
-    await kclient.ulti.hello_member(ctx=ctx, member=member)
+    await hello_member(ctx=ctx, member=member)
     
 @kclient.tree.command(name="setnotice" , description="Setup your notifications channel for your server")
 @has_permissions(administrator = True)
 async def setnotice(ctx : discord.Interaction , room: discord.TextChannel):
-    await kclient.ulti.set_notification(ctx= ctx , room= room)
+    await set_notification(ctx= ctx , room= room)
 
 
 # ---------- Help Command ----------
@@ -113,17 +113,20 @@ async def chnick_error(ctx: discord.Interaction, error):
 
 @kick.error
 async def kick_error(ctx: discord.Interaction, error):
-    await auto_mod_error(ctx=ctx, nnnnnnnnnnnnnnnnnnnnnnnnnnnnnmerror=error)
+    await auto_mod_error(ctx=ctx, error=error)
 
 # ---------- Chat AI Command ----------
 
 @kclient.tree.command(name="chat", description="Have a chat with ChatGPT")
-@app_commands.choices(isprivate=[
-                app_commands.Choice(name="True" , value= "True"),
-                app_commands.Choice(name= "False" , value= "False")
-])
-async def chat(ctx: discord.Interaction, message:str , isprivate : app_commands.Choice[str]):
-    await kclient.ai.chat(ctx , message , isprivate)
+async def chat(ctx: discord.Interaction, *, message: str):
+        if ctx.user == kclient.user:
+            return
+        username = str(ctx.user)
+        kclient.current_channel = ctx.channel
+        logger.info(
+            f"\x1b[31m{username}\x1b[0m : /chat [{message}] in ({kclient.current_channel})")
+
+        await kclient.enqueue_message(ctx, message)
         
 # ---------- Music Command ----------
 
@@ -161,18 +164,15 @@ async def ptrack(ctx: discord.Interaction):
     
 @kclient.tree.command(name="play" , description="Play a track")  
 async def play(ctx: discord.Interaction , url: str = None , query: str = None , list:str = None):
-    
     await ctx.response.defer(thinking=True)
-    
     if ctx.user.voice.channel == None:
         return
     if (url != None or query != None or list != None):
-        await kclient.music.add_to_queue(ctx , url , query , list)
+        await kclient.add_to_queue(ctx , url , query , list)
         
-    while(kclient.music.__isdone__ == False):
-        await asyncio.sleep(0.00000001)
-        
-    await kclient.play(ctx= ctx , id= ctx.guild_id)
+    id = kclient.get_id(ctx= ctx)
+    await ctx.followup.send("Playing...")
+    await kclient.play(ctx= ctx , id= id)
     
     
 @kclient.tree.command(name="setloop" , description="Set repeating for your music")
@@ -190,34 +190,20 @@ async def setloop(ctx : discord.Interaction , loop : app_commands.Choice[str]):
 
 @kclient.event
 async def on_ready():
-    
-    kclient.support.get_notifi()
-    kclient.support.get_emoji()
-    
-    # await kclient.send_start_prompt()
+    await ready()
+    await kclient.send_start_prompt()
     await kclient.tree.sync()
     loop = asyncio.get_event_loop()
-    loop.create_task(kclient.ai.chatting.process_messages())
+    loop.create_task(kclient.process_messages())
     logger.info(f'{kclient.user} is now running!')
 
 @kclient.event
 async def on_member_join(member):
-    temp = member.guild.id
-    channel = kclient.get_channel(int( kclient.support.notification[str(temp)]) ) # replace with your channel ID
-    role = discord.utils.get(member.guild.roles, name="member") # replace with your role name
-    await member.add_roles(role)
-    embeb = discord.Embed(title="" , color= get_kuumo_color(kuumo_color))
-    embeb.add_field(name ='' ,value= f"Welcome to the server, {member.mention}! You have been given the {role} role.")
-    await channel.send(embed= embeb)
+    await welcome_member(member=member)
 
 @kclient.event
 async def on_member_remove(member):
-    temp = member.guild.id
-    channel = kclient.get_channel(int( kclient.support.notification[str(temp)]) ) # replace with your channel ID
-    embeb = discord.Embed(title="" , color= get_kuumo_color(kuumo_color))
-    embeb.add_field(name = '' , value= f"Goodbye, {member.mention}! We'll miss you.")
-    await member.send(embed= embeb)
-    await channel.send(embed= embeb)
+    await goodbye_member(member=member)
 
 @kclient.event
 async def on_message(ctx : discord.Interaction):
@@ -236,7 +222,14 @@ async def on_message(ctx : discord.Interaction):
             await ctx.channel.send(f'tin ko juan e nhé')
         else:
             await ctx.channel.send(f'tin juan lun nhé e')
+            
+    if mess.startswith(";"):
+        temp = (mess.split())
+            
+        # print(kclient.tree.get_command(temp[0] [1:]) . name)
   
 
 if __name__ == '__main__':    
-    kclient.run(config.kuumuu_TOKEN)
+    # music_command.setup(kclient)
+    kclient.run(config.BOT_TOKEN)
+    pass
