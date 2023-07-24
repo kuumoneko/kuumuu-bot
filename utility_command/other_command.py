@@ -75,33 +75,3 @@ async def set_notification(ctx :discord.Interaction , room: discord.TextChannel)
     embeb.add_field(name = '' , value= f'<#{room.id}> has been set into the Announcement Room')
     await ctx.response.send_message(embed= embeb)
     
-async def ready():
-    # language()
-    get_color()
-    keep_alive()
-    get_emoji(kclient)
-    # print(emoji["hello"])
-    get_notifi()
-    print('We have logged in as {0.user}'.format(kclient))
-
-async def welcome_member(member : discord.Member):
-    
-    temp = member.guild.id
-    
-    # print(temp, ' ' ,kurru[str(temp)])
-    channel = kclient.get_channel(int(kurru[str(temp)])) # replace with your channel ID
-    role = discord.utils.get(member.guild.roles, name="member") # replace with your role name
-    await member.add_roles(role)
-    embeb = discord.Embed(title="" , color= get_kuumo_color(kuumo_color))
-    embeb.add_field(name ='' ,value= f"Welcome to the server, {member.mention}! You have been given the {role} role.")
-    await channel.send(embed= embeb)
-    
-async def goodbye_member(member : discord.Member):
-    temp = member.guild.id
-    
-    # print(temp, ' ' ,kurru[str(temp)])
-    channel = kclient.get_channel(int(kurru[str(temp)])) # replace with your channel ID
-    embeb = discord.Embed(title="" , color= get_kuumo_color(kuumo_color))
-    embeb.add_field(name = '' , value= f"Goodbye, {member.mention}! We'll miss you.")
-    await member.send(embed= embeb)
-    await channel.send(embed= embeb)

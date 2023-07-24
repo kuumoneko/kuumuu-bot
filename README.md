@@ -1,1 +1,4 @@
 # kuumuu-bot
+
+# Before Staring
+
