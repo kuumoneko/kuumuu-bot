@@ -2,7 +2,7 @@
     
     "C_Cpp.errorSquiggles": "disabled",
     
-    "workbench.colorTheme": "Discord Theme (Dark)",
+    "workbench.colorTheme": "Discord Theme",
     "terminal.integrated.enableMultiLinePasteWarning": false,
     
     "workbench.editorAssociations": {
