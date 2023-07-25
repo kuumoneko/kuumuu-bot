@@ -9,12 +9,15 @@ prompt_name = 'kuumuu_data/system_prompt.txt'
 prompt_path = os.path.join(config_dir, prompt_name)
 
 
-sys.path.append('D:\\')
-
 # import somedata.config
 sys.path.append(os.path.abspath(os.path.join( os.path.pardir , 'data_base')))
-# print (sys.path)
+
+print(sys.path)
+
 import config
+
+
+
 # import client_secret_CLIENTID
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
@@ -30,7 +33,7 @@ class aclient(discord.Client):
     def __init__(self) -> None:
         intents = discord.Intents.all()
         super().__init__(intents=intents)
-
+        self.TOKEN = config.kuumuu_TOKEN
         self.client = discord.Client(intents= intents)
         self.bot = commands.Bot(command_prefix=';' , intents= intents)
         

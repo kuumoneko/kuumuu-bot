@@ -11,16 +11,16 @@ class Support():
         ])
         
         self.list_temp = list([
-                         "tin juan ko"      ,
-                         "tin chuẩn không"  ,
-                         "tin chuẩn ko"     ,
-                         "tin juan không"   ,
-                         "tin chuẩn k"      ,
-                         "tin juan k"       ,
-                         "tin juan hong"    ,
-                         "tin chuẩn hong"   ,
-                         "tin juan hông"    ,
-                         "tin chuẩn hông"   ,
+                        "tin juan ko"      ,
+                        "tin chuẩn không"  ,
+                        "tin chuẩn ko"     ,
+                        "tin juan không"   ,
+                        "tin chuẩn k"      ,
+                        "tin juan k"       ,
+                        "tin juan hong"    ,
+                        "tin chuẩn hong"   ,
+                        "tin juan hông"    ,
+                        "tin chuẩn hông"   ,
                     ])   
 
         self.notification = defaultdict(self.def_value)
@@ -36,6 +36,7 @@ class Support():
     def check_tin_juan(self, a : str):
 
         for i in self.list_temp:
+            print(a.find(i))
             if a.find(i) != -1:
                 return True
         return False

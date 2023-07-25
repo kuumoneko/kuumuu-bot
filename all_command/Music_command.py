@@ -296,8 +296,6 @@ class Music():
     async def shuffle_track(self , ctx : discord.Interaction, id : int , mode : str):
         voice_clientt = await self.__connecting__(ctx= ctx)
         
-        if voice_clientt.is_playing():
-            voice_clientt.stop()
         
         tracks = []
         
@@ -309,9 +307,9 @@ class Music():
                 tracks.append(pre_list[0])
                 pre_list.popleft()
                 
-        while(len(curr_list)  > 0):
-            tracks.append(curr_list[0])
-            curr_list.popleft()
+        while(len(curr_list)  > 1):
+            tracks.append(curr_list[-1])
+            curr_list.pop()
         
         shuffle(tracks)
         

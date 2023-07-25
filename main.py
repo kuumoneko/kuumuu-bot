@@ -1,20 +1,14 @@
 
 from urllib.request import urlopen
-from kuumuu_bot import *
-
-from utility_command.help_command import *
-from moderator_command.auto_mod import *
-from utility_command.other_command import *
-from moderator_command.auto_mod_error import *
-import os
-from moderator_command.unban import *
+from kuumuu_import import *
+from kuumuu_bot import kclient
 
 # --------- Utility Command ---------
 
 @kclient.tree.command(name="news" , description="News about this bot")
 async def news(ctx: discord.Interaction):
     embeb = discord.Embed(title='' , color= kclient.support.get_kuumo_color())
-    temp = "`Beta 0.7.0`"
+    temp = "`Beta 0.7.5`"
     embeb.add_field(name=f'Kuumuu Client {temp} ' , 
                     value=f'`Improve data storage`')
     await ctx.response.send_message(embed=embeb)
@@ -50,9 +44,9 @@ async def setnotice(ctx : discord.Interaction , room: discord.TextChannel):
 
 # ---------- Help Command ----------
 
-@kclient.tree.command(name="help" , description="Auto support from client")
-async def help(ctx : discord.Interaction , command_helped : str = None):
-    await help_command(ctx= ctx , command_helped= command_helped)
+# @kclient.tree.command(name="help" , description="Auto support from client")
+# async def help(ctx : discord.Interaction , command_helped : str = None):
+#     await help_command(ctx= ctx , command_helped= command_helped)
 
 # ---------- Moderator Command ----------
 
@@ -97,32 +91,6 @@ async def chnick(ctx: discord.Interaction, member: discord.Member, *, name: str 
 @has_permissions(manage_roles=True)
 async def chrole(ctx: discord.Interaction, member: discord.Member, role: discord.Role):
     await kclient.mod.chrole(ctx=ctx, member=member, role=role)
-
-# ---------- Moderator Error Command ----------
-
-@timeout.error
-async def timeout_error(ctx: discord.Interaction, error):
-    await auto_mod_error(ctx=ctx, error=error)
-
-@untimeout.error
-async def untimeout_error(ctx: discord.Interaction, error):
-    await auto_mod_error(ctx=ctx, error=error)
-
-@chrole.error
-async def chrole_error(ctx: discord.Interaction, error):
-    await auto_mod_error(ctx=ctx, error=error)
-
-@ban.error
-async def ban_error(ctx: discord.Interaction, error):
-    await auto_mod_error(ctx=ctx, error=error)
-
-@chnick.error
-async def chnick_error(ctx: discord.Interaction, error):
-    await auto_mod_error(ctx=ctx, error=error)
-
-@kick.error
-async def kick_error(ctx: discord.Interaction, error):
-    await auto_mod_error(ctx=ctx, error=error)
 
 # ---------- Chat AI Command ----------
 
@@ -245,7 +213,7 @@ async def on_member_join(member):
     channel = kclient.get_channel(int( kclient.support.notification[str(temp)]) ) # replace with your channel ID
     role = discord.utils.get(member.guild.roles, name="member") # replace with your role name
     await member.add_roles(role)
-    embeb = discord.Embed(title="" , color= get_kuumo_color(kuumo_color))
+    embeb = discord.Embed(title="" , color= kclient.support.get_kuumo_color())
     embeb.add_field(name ='' ,value= f"Welcome to the server, {member.mention}! You have been given the {role} role.")
     await channel.send(embed= embeb)
 
@@ -253,7 +221,7 @@ async def on_member_join(member):
 async def on_member_remove(member : discord.Member):
     temp = member.guild.id
     channel = kclient.get_channel(int( kclient.support.notification[str(temp)]) ) # replace with your channel ID
-    embeb = discord.Embed(title="" , color= get_kuumo_color(kuumo_color))
+    embeb = discord.Embed(title="" , color= kclient.support.get_kuumo_color())
     embeb.add_field(name = '' , value= f"Goodbye, {member.mention}! We'll miss you.")
     await channel.send(embed= embeb)
     await member.send(embed=embeb)
@@ -275,13 +243,12 @@ async def on_message(ctx : discord.Interaction):
 
     print(mess, " was sent by ", ten)
 
-    if check_tin_juan(mess):
+    if kclient.support.check_tin_juan(a= mess):
         a = randrange(0, 100, 1)
         if a % 2 == 0:
             await ctx.channel.send(f'tin ko juan e nhé')
         else:
             await ctx.channel.send(f'tin juan lun nhé e')
-  
 
 if __name__ == '__main__':    
-    kclient.run(config.kuumuu_TOKEN)
+    kclient.run(kclient.TOKEN)
