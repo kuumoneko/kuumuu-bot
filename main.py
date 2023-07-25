@@ -166,13 +166,20 @@ async def ptrack(ctx: discord.Interaction):
     await kclient.music.previous_track(ctx=ctx , id= ctx.guild_id)
     
 @kclient.tree.command(name="play" , description="Play a track")  
-async def play(ctx: discord.Interaction , url: str = None , query: str = None , list:str = None):
-    
+@app_commands.choices(isloop=[
+        app_commands.Choice(name="True", value="True"),
+        app_commands.Choice(name="False", value="False")
+    ])
+@app_commands.choices(shuffle=[
+        app_commands.Choice(name="The next queue", value="1" ),
+        app_commands.Choice(name="All track" ,value="2" ),
+        app_commands.Choice(name="No shuffle", value="3")
+    ])
+async def play(ctx: discord.Interaction , url: str = None , query: str = None , list:str = None , isloop : app_commands.Choice[str] = "False" , shuffle: app_commands.Choice[str] = "False" ):
     await ctx.response.defer(thinking=True)
     
     if ctx.user.voice.channel == None:
         return
-    
     
     if (url != None or query != None or list != None):
         kclient.music.__isdone__ = False
@@ -180,9 +187,21 @@ async def play(ctx: discord.Interaction , url: str = None , query: str = None , 
         
         while(kclient.music.__isdone__ == False):
             await asyncio.sleep(0.00000001)
+            
+    if isloop.value == "True":
+        kclient.music.__isloop__[ctx.guild_id] = True
+    else:
+        kclient.music.__isloop__[ctx.guild_id] = False
+        
+    
+    if shuffle.value == "1":
+        await kclient.music.shuffle_track(ctx= ctx , id= ctx.guild_id , mode = "True")
+        return
+    elif shuffle.value == "2":
+        await kclient.music.shuffle_track(ctx= ctx , id= ctx.guild_id , mode= "False")
+        return
         
     await kclient.music.play(ctx= ctx , id= ctx.guild_id)
-    
     
 @kclient.tree.command(name="setloop" , description="Set repeating for your music")
 @app_commands.choices(loop=[
@@ -191,10 +210,21 @@ async def play(ctx: discord.Interaction , url: str = None , query: str = None , 
     ])
 async def setloop(ctx : discord.Interaction , loop : app_commands.Choice[str]):
     if loop.value == "True":
-        kclient.is_loop[ctx.guild_id] = True
+        kclient.music.__isloop__[ctx.guild_id] = True
     else:
-        kclient.is_loop[ctx.guild_id] = False
+        kclient.music.__isloop__[ctx.guild_id] = False
         
+    await ctx.response.send_message(f'Your track has been change Loop to: {loop.value}')
+        
+@kclient.tree.command(name="shuffle" , description="Shuffle your track")
+@app_commands.choices(mode=[
+        app_commands.Choice(name="The next queue", value="True" ),
+        app_commands.Choice(name="All track" ,value="False" )
+    ])
+async def shuffle(ctx : discord.Interaction , mode : app_commands.Choice[str]):
+    await kclient.music.shuffle_track(ctx= ctx , id= ctx.guild_id , mode= mode)
+
+
 # ------- Main Bot ---------
 
 @kclient.event

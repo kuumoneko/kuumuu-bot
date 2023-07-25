@@ -208,19 +208,15 @@ class Music():
                 return
 
             url = curr_list[0]
+            temp = "https://www.youtube.com/watch?v="+url
             
             # print(curr_list)
             # print(pre_list)
-            
-            temp = "https://www.youtube.com/watch?v="+url
-            
-            print(temp)
+            # print(temp)
             
             song = pafy.new(url=temp)  # creates a new pafy object
             audio = song.getbestaudio()  # gets an audio source
             tempp = FFmpegPCMAudio(audio.url, **FFMPEG_OPTIONS)
-            
-            
             
             while voice_clientt.is_playing() or voice_clientt.is_paused():
                 await asyncio.sleep(1.0)   
@@ -246,7 +242,6 @@ class Music():
             
             await ctx.channel.send(embed= embeb1)
             
-            await asyncio.sleep(3.0)
             while voice_clientt.is_playing() or voice_clientt.is_paused():
                 await asyncio.sleep(1.0)
             
@@ -296,6 +291,33 @@ class Music():
             curr_list.appendleft(curr_list[-1])
             curr_list.pop()   
             
+        await self.play(ctx= ctx , id= id)
+        
+    async def shuffle_track(self , ctx : discord.Interaction, id : int , mode : str):
+        voice_clientt = await self.__connecting__(ctx= ctx)
+        
+        if voice_clientt.is_playing():
+            voice_clientt.stop()
+        
+        tracks = []
+        
+        curr_list = self.__ctrack__[id]
+        pre_list = self.__ptrack__[id]
+        
+        if (mode == "False"):
+            while(len(pre_list) > 0):
+                tracks.append(pre_list[0])
+                pre_list.popleft()
+                
+        while(len(curr_list)  > 0):
+            tracks.append(curr_list[0])
+            curr_list.popleft()
+        
+        shuffle(tracks)
+        
+        for i in tracks:
+            self.__ctrack__[id].append(i)
+        
         await self.play(ctx= ctx , id= id)
             
     
