@@ -36,7 +36,6 @@ class Support():
     def check_tin_juan(self, a : str):
 
         for i in self.list_temp:
-            print(a.find(i))
             if a.find(i) != -1:
                 return True
         return False

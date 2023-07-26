@@ -7,15 +7,15 @@ class Music():
     def __init__(self , client) -> None:
         self.__client__ = client
         
-        self.api_service_name = "youtube"
-        self.api_version = "v3"
-        self.client_secrets_file = "D:/data_base/client_secret_CLIENTID.json"
+        self.__api_service_name__ = "youtube"
+        self.__api_version__ = "v3"
+        self.__client_secrets_file__ = "D:/data_base/client_secret_CLIENTID.json"
         flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
-        self.client_secrets_file, scopes)
+        self.__client_secrets_file__, scopes)
     
-        self.credentials = flow.run_local_server()
-        self.ytb = googleapiclient.discovery.build(
-            self.api_service_name, self.api_version, credentials=self.credentials)
+        self.__credentials__ = flow.run_local_server()
+        self.__ytb__ = googleapiclient.discovery.build(
+            self.__api_service_name__, self.__api_version__, credentials=self.__credentials__)
         
         
         self.__ctrack__ = defaultdict(self.__def_music__)
@@ -117,8 +117,6 @@ class Music():
                 
             await ctx.followup.send(view= Search( ctx= ctx , client= self ,result= lists) )
 
-            
-            
             return
             
         elif url != None:
@@ -255,7 +253,7 @@ class Music():
             curr_list = self.__ctrack__[id]  
         return
     
-    async def next_track(self , ctx : discord.Interaction , id:int):
+    async def ntrack(self , ctx : discord.Interaction , id:int):
         '''
             pramater:
                 id : must be Member.id or Guild.id
@@ -275,7 +273,7 @@ class Music():
         
         await self.play(ctx= ctx , id= id)
     
-    async def previous_track(self , ctx : discord.Interaction , id:int):
+    async def ptrack(self , ctx : discord.Interaction , id:int):
         voice_clientt = await self.__connecting__(ctx= ctx)
     
         voice_clientt.stop()
@@ -293,7 +291,7 @@ class Music():
             
         await self.play(ctx= ctx , id= id)
         
-    async def shuffle_track(self , ctx : discord.Interaction, id : int , mode : str):
+    async def shuffle(self , ctx : discord.Interaction, id : int , mode : str):
         voice_clientt = await self.__connecting__(ctx= ctx)
         
         
@@ -319,7 +317,7 @@ class Music():
         await self.play(ctx= ctx , id= id)
             
     
-    async def stop_music(self , ctx: discord.Interaction , id : int):
+    async def stop(self , ctx: discord.Interaction , id : int):
         voice_clientt = await self.__connecting__(ctx= ctx)
         if (voice_clientt.is_playing()):
             voice_clientt.stop()
@@ -332,13 +330,22 @@ class Music():
         
         return   
     
-    async def pause_music(self , ctx: discord.Interaction):
+    async def pause(self , ctx: discord.Interaction):
         voice_clientt = await self.__connecting__(ctx= ctx) 
         if voice_clientt.is_playing():
             voice_clientt.pause()
+        
+    async def setloop(self , ctx : discord.Interaction , loop):
+        if loop.value == "True":
+            self.__isloop__[ctx.guild_id] = True
+        else:
+            self.__isloop__[ctx.guild_id] = False
+            
+        await ctx.response.send_message(f'Your track has been change Loop to: {loop.value}')
+        
 
         
-    async def resume_music(self , ctx: discord.Interaction):
+    async def resume(self , ctx: discord.Interaction):
         voice_clientt = await self.__connecting__(ctx= ctx)
         if voice_clientt.is_paused():
             voice_clientt.resume()

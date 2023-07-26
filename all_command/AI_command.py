@@ -3,7 +3,7 @@ from kuumuu_import import *
 class AI():
     def __init__(self , client) -> None:
         self.__client__ = client
-        self.chatting = AI_chat(ai= self)
+        self.__chatting__ = AI_chat(ai= self)
         super().__init__()
         
     async def chat(self , ctx : discord.Interaction , message: str , isprivate : str):
@@ -16,7 +16,7 @@ class AI():
         logger.info(
             f"\x1b[31m{username}\x1b[0m : /chat [{message}] [Private = {self.chatting.isPrivate}] in ({self.chatting.current_channel})")
 
-        await self.chatting.enqueue_message(ctx, message)
+        await self.__chatting__.enqueue_message(ctx, message)
         
         
 class AI_chat():

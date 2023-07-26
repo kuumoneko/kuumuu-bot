@@ -5,19 +5,25 @@ class Ulitlity():
         self.__client__ = client
         super().__init__()
         
+    async def news(self, ctx : discord.Interaction ):
+        embeb = discord.Embed(title='' , color= self.__client__.support.get_kuumo_color())
+        temp = "`Beta 0.7.5`"
+        embeb.add_field(name=f'Kuumuu Client {temp} ' , 
+                        value=f'`Improve data storage`')
+        await ctx.response.send_message(embed=embeb)
     
-    async def check_ping(self , interaction : discord.Interaction , ping: int):
+    async def ping(self , interaction : discord.Interaction , ping: int):
         embed=discord.Embed(title="", description="", color= self.__client__.support.get_kuumo_color()) 
         embed.add_field(name="", value=f'Pong! Now, Ping of kuumuu is { int((round(self.__client__.latency, 10)*1000)) } ms', inline=False)
         await interaction.response.send_message(embed=embed)
         
-    async def translate(self , interaction : discord.Interaction , lang , thing: str):
+    async def trans(self , interaction : discord.Interaction , lang , thing: str):
         translation = Translator().translate(text=thing, dest=lang , src='auto')
         embeb = discord.Embed(title='' , color= self.__client__.support.get_kuumo_color()) 
         embeb.add_field(name='' , value=f'{translation.text}')
         await interaction.response.send_message(embed= embeb)
         
-    async def hello_member(self , ctx : discord.Interaction , member:discord.Member = None):
+    async def hello(self , ctx : discord.Interaction , member:discord.Member = None):
         time = datetime.now
         hou = time().hour
         kuumo = "hello"
@@ -57,7 +63,7 @@ class Ulitlity():
         
         await ctx.response.send_message(embed= embeb)
         
-    async def set_notification(self , ctx :discord.Interaction , room: discord.TextChannel):
+    async def setnotice(self , ctx :discord.Interaction , room: discord.TextChannel):
         kuumo = open("kuumuu_data\\notification.txt" , "w")
         
         temp = str(ctx.guild.id)
