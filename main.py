@@ -171,22 +171,29 @@ async def ptrack(ctx: discord.Interaction):
         app_commands.Choice(name="All track" ,value="2" ),
         app_commands.Choice(name="No shuffle", value="3")
     ])
-@app_commands.describe(url = "Link Youtube track")
-@app_commands.describe(query = "What do you want to search on Youtube")
-@app_commands.describe(list = "Link Youtube list track")
+@app_commands.describe(prompt= "Link Youtube or query to Search on Youtube")
 @app_commands.describe(isloop = "Do you want your track is repeated?")
 @app_commands.describe(shuffle = "What mode would be used?")
 async def play(ctx: discord.Interaction,
-                url: str = None,
-                query: str = None, 
-                list:str = None, 
+                prompt : str,
                 isloop : app_commands.Choice[str] = "False", 
-                shuffle: app_commands.Choice[str] = "False" 
+                shuffle: app_commands.Choice[str] = "3" 
             ):
     await ctx.response.defer(thinking=True)
     
     if ctx.user.voice.channel == None:
         return
+    
+    list = None
+    url = None
+    query = None
+    
+    if prompt.find('playlist?list=') != -1:
+        list = prompt
+    elif prompt.find('watch?=') != -1 or prompt.find('youtu.be/') != -1:
+        url = prompt
+    else:
+        query = prompt
     
     if (url != None or query != None or list != None):
         kclient.music.__isdone__ = False

@@ -74,7 +74,7 @@ class Music():
         if query != None:
             lists = []
         
-            request = self.ytb.search().list(
+            request = self.__ytb__.search().list(
                 part="snippet",
                 maxResults=10,
                 q= query
@@ -89,7 +89,7 @@ class Music():
                     continue
 
                 cnt+=1
-                request1 = self.ytb.videos().list(
+                request1 = self.__ytb__.videos().list(
                             part="snippet,contentDetails,statistics",
                             id=j['id']['videoId']
                         )
@@ -132,7 +132,7 @@ class Music():
 
             URL = list_url[list_url.find('=') + 1 : ]
             
-            request = self.ytb.playlistItems().list(
+            request = self.__ytb__.playlistItems().list(
                 part="snippet,contentDetails",
                 maxResults=100,
                 playlistId= URL
@@ -148,7 +148,7 @@ class Music():
                         self.__ctrack__[ctx.guild_id].append(i['snippet']['resourceId']['videoId'])
                         cnt+=1
                         
-                request = self.ytb.playlistItems().list(
+                request = self.__ytb__.playlistItems().list(
                     part="snippet,contentDetails",
                     maxResults=100,
                     pageToken= temp,
@@ -222,7 +222,7 @@ class Music():
             voice_clientt.play(tempp)
             
             embeb1 = Embed(title=f"Track's info" , color= self.__client__.support.get_kuumo_color())
-            request = self.ytb.videos().list(
+            request = self.__ytb__.videos().list(
                 part="snippet,contentDetails,statistics",
                 id=url
             )
