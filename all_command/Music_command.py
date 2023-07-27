@@ -271,6 +271,8 @@ class Music():
             curr_list.append(curr_list[0])
         curr_list.popleft()   
         
+        await ctx.response.send_message("Playing next track...")
+        
         await self.play(ctx= ctx , id= id)
     
     async def ptrack(self , ctx : discord.Interaction , id:int):
@@ -288,6 +290,8 @@ class Music():
         else:
             curr_list.appendleft(curr_list[-1])
             curr_list.pop()   
+            
+        await ctx.response.send_message("Playing previous track...")
             
         await self.play(ctx= ctx , id= id)
         
@@ -313,6 +317,8 @@ class Music():
         
         for i in tracks:
             self.__ctrack__[id].append(i)
+            
+        await ctx.response.send_message("Your track has been shuffled. Now playing...")
         
         await self.play(ctx= ctx , id= id)
             
@@ -335,6 +341,8 @@ class Music():
         if voice_clientt.is_playing():
             voice_clientt.pause()
         
+        await ctx.response.send_message("Pausing...")
+        
     async def setloop(self , ctx : discord.Interaction , loop):
         if loop.value == "True":
             self.__isloop__[ctx.guild_id] = True
@@ -349,15 +357,20 @@ class Music():
         voice_clientt = await self.__connecting__(ctx= ctx)
         if voice_clientt.is_paused():
             voice_clientt.resume()
+        
+        await ctx.response.send_message("Now playing...")
     
     async def join(self, ctx:discord.Interaction):
         channel = ctx.user.voice.channel
         await channel.connect()
+        
+        await ctx.response.send_message(f"I have been joined <#{channel.id}>")
 
     async def leave(self , ctx : discord.Interaction):
         channel = ctx.guild.voice_client
         await channel.disconnect()
 
+        await ctx.response.send_message(f"I have been joined <#{channel.id}>")
         
 class Search(discord.ui.View):
     def __init__(self , client , ctx : discord.Interaction, result : List):
@@ -367,13 +380,13 @@ class Search(discord.ui.View):
 
         
     @discord.ui.select(placeholder='Select other page to see other track for selecting your track to play', min_values=1, max_values=1, 
-                       options=[
-                           discord.SelectOption(label='1', description='The first Video'  , value= 1),
+                        options=[
+                            discord.SelectOption(label='1', description='The first Video'  , value= 1),
                             discord.SelectOption(label='2', description='The second video' , value= 2),
                             discord.SelectOption(label='3', description='The Third video'  , value= 3),
                             discord.SelectOption(label='4', description='The 4th video'    , value= 4),
                             discord.SelectOption(label='5', description='The 5th video'    , value= 5),
-                       ] )
+                            ])
     async def select_callback(self, interaction : discord.Interaction , select): # the function called when the user is done selecting options
         await interaction.response.edit_message(embed= self.result[ ord(select.values[0]) - 49 ])
         
