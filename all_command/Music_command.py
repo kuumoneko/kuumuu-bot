@@ -318,7 +318,6 @@ class Music():
         for i in tracks:
             self.__ctrack__[id].append(i)
             
-        await ctx.response.send_message("Your track has been shuffled. Now playing...")
         
         await self.play(ctx= ctx , id= id)
             
