@@ -270,12 +270,12 @@ async def on_member_remove(member : discord.Member):
     await member.send(embed=embeb)
     
 @kclient.event
-async def on_voice_state_update(self, member, before, after):
+async def on_voice_state_update( member, before, after):
     
-    if not member.id == self.bot.user.id:
+    if member.id == kclient.user.id:
         return
 
-    elif before.channel is None:
+    if before.channel is None:
         voice = after.channel.guild.voice_client
         time = 0
         while True:
