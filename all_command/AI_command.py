@@ -8,13 +8,13 @@ class AI():
         
     async def chat(self , ctx : discord.Interaction , message: str , isprivate : str):
         
-        self.chatting.isPrivate = isprivate.value
+        self.__chatting__.isPrivate = isprivate.value
         if ctx.user == self.__client__.user:
             return
         username = str(ctx.user)
-        self.chatting.current_channel = ctx.channel
+        self.__chatting__.current_channel = ctx.channel
         logger.info(
-            f"\x1b[31m{username}\x1b[0m : /chat [{message}] [Private = {self.chatting.isPrivate}] in ({self.chatting.current_channel})")
+            f"\x1b[31m{username}\x1b[0m : /chat [{message}] [Private = {self.__chatting__.isPrivate}] in ({self.__chatting__.current_channel})")
 
         await self.__chatting__.enqueue_message(ctx, message)
         
