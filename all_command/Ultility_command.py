@@ -7,9 +7,9 @@ class Ulitlity():
         
     async def news(self, ctx : discord.Interaction ):
         embeb = discord.Embed(title='' , color= self.__client__.support.get_kuumo_color())
-        temp = "`Beta 0.7.5`"
+        temp = "`Beta 0.7.6`"
         embeb.add_field(name=f'Kuumuu Client {temp} ' , 
-                        value=f'`Improve data storage`')
+                        value=f'`Fix bug in command "chat"`')
         await ctx.response.send_message(embed=embeb)
     
     async def ping(self , interaction : discord.Interaction , ping: int):
