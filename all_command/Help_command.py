@@ -74,7 +74,11 @@ class Help():
                     
                     parama = parama + " {" + f"{pram}" + "} "
                     
-                    kuumo_parame = kuumo_parame + f"  {pram}:     {temp._params[pram].description.message}\n"
+                    kuumo_parame = kuumo_parame + f"  {pram}:"
+                    for i in range(0 , temp_length):
+                        kuumo_parame = kuumo_parame + " "
+                    
+                    kuumo_parame = kuumo_parame + f"{temp._params[pram].description.message}\n"
                     
                     
             
