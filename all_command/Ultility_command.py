@@ -18,10 +18,11 @@ class Ulitlity():
         await interaction.response.send_message(embed=embed)
         
     async def trans(self , interaction : discord.Interaction , lang , thing: str):
+        await interaction.response.defer(thinking=True)
         translation = Translator().translate(text=thing, dest=lang , src='auto')
         embeb = discord.Embed(title='' , color= self.__client__.support.get_kuumo_color()) 
         embeb.add_field(name='' , value=f'{translation.text}')
-        await interaction.response.send_message(embed= embeb)
+        await interaction.followup.send(embed= embeb)
         
     async def hello(self , ctx : discord.Interaction , member:discord.Member = None):
         time = datetime.now

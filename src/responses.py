@@ -2,7 +2,7 @@ from src import personas
 from src.log import logger
 from asgiref.sync import sync_to_async
 from EdgeGPT.EdgeGPT import ConversationStyle
-
+import json
 
 async def official_handle_response(message, kclient) -> str:
     return await sync_to_async(kclient.chatbot.ask)(message)
@@ -13,19 +13,22 @@ async def unofficial_handle_response(message, kclient) -> str:
     return responseMessage
 
 async def bard_handle_response(message, kclient) -> str:
-    response = await sync_to_async(kclient.chatbot.ask)(message)
+    response = await sync_to_async(kclient.bardchatbot.ask)(message)
     responseMessage = response["content"]
     return responseMessage
 
 async def bing_handle_response(message, kclient, conversation_style = ConversationStyle.balanced) -> str:
     try:
-        response = await kclient.chatbot.ask(prompt = message,
+        response = await kclient.edgechatbot.ask(prompt = message,
                                             conversation_style = conversation_style,
                                             simplify_response = True)
+        # async for i in response:
+        #     print(i)
+        # print(json.loads(json.dumps(response)))
         responseMessage = response['text']
     except Exception as e:
         logger.error(f'Error occurred: {e}')
-        await kclient.chatbot.reset()
+        await kclient.edgechatbot.reset()
         raise Exception("Bing is fail to continue the conversation, this conversation will automatically reset.")
 
     return responseMessage

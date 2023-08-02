@@ -36,14 +36,30 @@ from discord.ext.commands.bot import BotBase
 from revChatGPT.V3 import Chatbot
 from revChatGPT.V1 import AsyncChatbot
 from EdgeGPT.EdgeGPT import Chatbot as EdgeChatbot
+from EdgeGPT.EdgeGPT import ConversationStyle
 from src.auto_login.AutoLogin import MicrosoftBingAutoLogin
 from collections import deque
 from typing import List
 from datetime import *
+from revChatGPT import *
+from Bard import Chatbot as BardChatBot
 
 import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
 
+from asgiref.sync import sync_to_async
 
 from all_command import *
+
+sys.path.append(os.path.abspath(os.path.join( os.path.pardir , 'data_base')))
+
+import config
+
+
+
+# import pkg_resources
+# from subprocess import call
+
+# packages = [dist.project_name for dist in pkg_resources.working_set]
+# call("pip install --upgrade " + ' '.join(packages), shell=True)

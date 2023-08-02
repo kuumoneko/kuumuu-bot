@@ -12,9 +12,6 @@
         "*.pyc": "default"
     },
     "liveServer.settings.donotShowInfoMsg": true,
-    "[html]": {
-        "editor.defaultFormatter": "mohd-akram.vscode-html-format"
-    },
     "launch": {
 
         "configurations": [],
@@ -62,7 +59,7 @@
     {
         "diffEditor.ignoreTrimWhitespace": false,
         "editor.wordBasedSuggestions": false,
-        "editor.defaultFormatter": "ms-python.autopep8"
+        "editor.defaultFormatter": "vscode.github"
     },
 
     

@@ -60,7 +60,6 @@ async def setnotice(ctx : discord.Interaction , room: discord.TextChannel):
 @kclient.tree.command(name="help" , description="Auto support from client")
 @app_commands.describe(command_helped= "Command that you need help")
 async def help(ctx : discord.Interaction , command_helped : str = None):
-    # await Help_command.Help(client= kclient).help(ctx= ctx , command= command_helped)
     await kclient.help.help(ctx= ctx , command= command_helped)
 
 # ---------- Moderator Command ----------
@@ -91,7 +90,6 @@ async def unban(ctx: discord.Interaction):
 @app_commands.describe(time = "What would you like to be used?")
 async def timeout(ctx : discord.Interaction, member: discord.Member, number: int, time: app_commands.Choice[str]):
     await kclient.mod.timeout(ctx=ctx, member=member, numb=number, string=time)
-
 
 @kclient.tree.command(name="untimeout", description="Untimeout a member in your server")
 @has_permissions(moderate_members = True)
@@ -125,10 +123,17 @@ async def chrole(ctx: discord.Interaction, member: discord.Member, role: discord
                 app_commands.Choice(name="True" , value= "True"),
                 app_commands.Choice(name= "False" , value= "False")
 ])
+@app_commands.choices(chatbot=[
+                        app_commands.Choice(name="Bing AI Creative" , value="Bing Creative"),
+                        app_commands.Choice(name="Bing AI Balanced" , value="Bing Balanced"),
+                        app_commands.Choice(name="Bing AI Precise" , value="Bing Precise"),
+                        app_commands.Choice(name="Google Bard" , value="Bard")
+])
 @app_commands.describe(message = "What do you want to ask Kuumuu?")
 @app_commands.describe(isprivate = "Do you want to ask private?")
-async def chat(ctx: discord.Interaction, message:str , isprivate : app_commands.Choice[str]):
-    await kclient.ai.chat(ctx , message , isprivate)
+@app_commands.describe(chatbot = "What chat bot you want to use?")
+async def chat(ctx: discord.Interaction, message:str , isprivate : app_commands.Choice[str]  , chatbot: app_commands.Choice[str]):
+    await kclient.ai.chat(ctx , message , isprivate.value , chatbot.value)
         
 # ---------- Music Command ----------
 
@@ -150,7 +155,7 @@ async def resume(ctx: discord.Interaction):
     
 @kclient.tree.command(name='stop', description='Stops the song')
 async def stop(ctx: discord.Interaction):
-    await kclient.music.stop_music(ctx= ctx , id = ctx.guild_id)
+    await kclient.music.stop(ctx= ctx , id = ctx.guild_id)
     await kclient.music.leave(ctx= ctx)
     
 @kclient.tree.command(name="ntrack" , description="Play next track in queue")
@@ -201,19 +206,19 @@ async def play(ctx: discord.Interaction,
         
         while(kclient.music.__isdone__ == False):
             await asyncio.sleep(0.00000001)
-            
-    if isloop.value == "True":
+    
+    if type(isloop) != str and isloop.value == "True":
         kclient.music.__isloop__[ctx.guild_id] = True
     else:
         kclient.music.__isloop__[ctx.guild_id] = False
         
-    
-    if shuffle.value == "1":
-        await kclient.music.shuffle(ctx= ctx , id= ctx.guild_id , mode = "True")
-        return
-    elif shuffle.value == "2":
-        await kclient.music.shuffle(ctx= ctx , id= ctx.guild_id , mode= "False")
-        return
+    if type(shuffle) != str:
+        if shuffle.value == "1":
+            await kclient.music.shuffle(ctx= ctx , id= ctx.guild_id , mode = "True")
+            return
+        elif shuffle.value == "2":
+            await kclient.music.shuffle(ctx= ctx , id= ctx.guild_id , mode= "False")
+            return
         
     await kclient.music.play(ctx= ctx , id= ctx.guild_id)
     
@@ -225,7 +230,7 @@ async def play(ctx: discord.Interaction,
 @app_commands.describe(loop = "Do you want your track is repeated?")
 async def setloop(ctx : discord.Interaction , loop : app_commands.Choice[str]):
     await kclient.music.setloop(ctx , loop)
-            
+
 @kclient.tree.command(name="shuffle" , description="Shuffle your track")
 @app_commands.choices(mode=[
         app_commands.Choice(name="The next queue", value="True" ),
@@ -275,35 +280,43 @@ async def on_voice_state_update( member, before, after):
     if member.id == kclient.user.id:
         return
 
-    if before.channel is None:
-        voice = after.channel.guild.voice_client
-        time = 0
-        while True:
-            await asyncio.sleep(1)
-            time = time + 1
-            if voice.is_playing() and not voice.is_paused():
-                time = 0
-            if time == 600:
+    if before.channel != after.channel:
+        voice = before.channel.guild.voice_client
+        cnt = 0
+        while len(before.channel.members) < 2:
+            
+            
+            cnt = cnt + 0.1
+            await asyncio.sleep(0.1)
+            if (cnt > 3.5):
                 await voice.disconnect()
-            if not voice.is_connected():
-                break
-    
-    
+
+
 @kclient.event
 async def on_command_error(ctx, error):
     print(error)
 
 
 @kclient.event
-async def on_message(ctx : discord.Interaction):
+async def on_message(ctx):
 
     mess = ctx.content
     ten = ctx.author
 
     if (ten == kclient.user):
         return
-
-    print(mess, " was sent by ", ten)
+    
+    if len(ctx.attachments) > 0:
+        attachment = ctx.attachments[0]
+    
+    
+        if attachment.filename.endswith(".jpg") or attachment.filename.endswith(".jpeg") or attachment.filename.endswith(".png") or attachment.filename.endswith(".webp") or attachment.filename.endswith(".gif"):
+            image = attachment.url
+        elif "https://images-ext-1.discordapp.net" in ctx.content or "https://tenor.com/view/" in ctx.content:
+            image = ctx.content
+        print(f"{image}  {mess} " , " was sent by ", ten)
+    else:
+        print(mess, " was sent by ", ten)
 
     if kclient.support.check_tin_juan(a= mess):
         a = randrange(0, 100, 1)
@@ -311,6 +324,14 @@ async def on_message(ctx : discord.Interaction):
             await ctx.channel.send(f'tin ko juan e nhé')
         else:
             await ctx.channel.send(f'tin juan lun nhé e')
-
+            
+    mention = kclient.user.id
+    ment = f"Hey <@{mention}>"
+    if ment in mess:
+        print(mess[len(ment) : ])
+            
+    if kclient.user.mentioned_in(ctx):
+        await ctx.channel.send('You mentioned me!')
+            
 if __name__ == '__main__':    
     kclient.run(kclient.TOKEN)

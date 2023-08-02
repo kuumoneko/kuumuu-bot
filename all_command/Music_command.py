@@ -369,7 +369,7 @@ class Music():
         channel = ctx.guild.voice_client
         await channel.disconnect()
 
-        await ctx.response.send_message(f"I have been joined <#{channel.id}>")
+        await ctx.response.send_message(f"I have been leaved")
         
 class Search(discord.ui.View):
     def __init__(self , client , ctx : discord.Interaction, result : List):

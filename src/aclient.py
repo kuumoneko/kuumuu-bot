@@ -2,10 +2,6 @@ from kuumuu_import import *
 
 scope = "user-library-read"
 
-sys.path.append(os.path.abspath(os.path.join( os.path.pardir , 'data_base')))
-
-import config
-
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 scopes = ["https://www.googleapis.com/auth/youtube.readonly"]
 
@@ -14,6 +10,11 @@ class aclient(discord.Client):
         intents = discord.Intents.all()
         super().__init__(intents=intents)
         self.TOKEN = config.kuumuu_TOKEN
+        
+        self.Secure_1PSID = config.Secure_1PSID
+
+        self.Secure_1PSIDTS = config.Secure_1PSIDTS
+        
         self.client = discord.Client(intents= intents)
         self.bot = commands.Bot(command_prefix=';' , intents= intents)
         
