@@ -247,7 +247,6 @@ async def setloop(ctx : discord.Interaction , loop : app_commands.Choice[str]):
 async def shuffle(ctx : discord.Interaction , mode : app_commands.Choice[str]):
     await kclient.music.shuffle(ctx= ctx , id= ctx.guild_id , mode= mode)
 
-
 # ------- Main Bot ---------
 
 @kclient.event
@@ -279,32 +278,34 @@ async def on_member_remove(member : discord.Member):
     embeb.add_field(name = '' , value= f"Goodbye, {member.mention}! We'll miss you.")
     await channel.send(embed= embeb)
     await member.send(embed=embeb)
-    
+
 @kclient.event
 async def on_voice_state_update( member, before, after):
     
     if member.id == kclient.user.id:
         return
-
-    if before.channel != after.channel:
-        voice = before.channel.guild.voice_client
+    
+    if after.channel != before.channel:
+        # voice = 
+        voice = get(kclient.voice_clients, guild=member.guild)
         cnt = 0
+        
+        if voice == None:
+            return
+        
         while len(before.channel.members) < 2:
-            
-            
             cnt = cnt + 0.1
             await asyncio.sleep(0.1)
             if (cnt > 3.5):
                 await voice.disconnect()
 
-
-@kclient.event
-async def on_command_error(ctx, error):
+@kclient.tree.error
+async def on_app_command_error(ctx: discord.Interaction, error):
+    await ctx.response.send_message(f"Something was wrong.\nError:\n ```{error}```\nPlease call my owner for helping!")
     print(error)
 
-
 @kclient.event
-async def on_message(ctx):
+async def on_message(ctx : discord.Message):
 
     mess = ctx.content
     ten = ctx.author
@@ -315,12 +316,12 @@ async def on_message(ctx):
     if len(ctx.attachments) > 0:
         attachment = ctx.attachments[0]
     
-    
         if attachment.filename.endswith(".jpg") or attachment.filename.endswith(".jpeg") or attachment.filename.endswith(".png") or attachment.filename.endswith(".webp") or attachment.filename.endswith(".gif"):
             image = attachment.url
-        elif "https://images-ext-1.discordapp.net" in ctx.content or "https://tenor.com/view/" in ctx.content:
-            image = ctx.content
-        print(f"{image}  {mess} " , " was sent by ", ten)
+            print(f"{image} {mess}  was sent by {ten}")
+        elif "https://images-ext-1.discordapp.net" in ctx.content or "https://tenor.com/view/" in mess:
+            
+            print(f"{mess} " , " was sent by ", ten)
     else:
         print(mess, " was sent by ", ten)
 
