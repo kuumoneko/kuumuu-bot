@@ -22,7 +22,6 @@ class AI_chat():
     def __init__(self , ai) -> None:
         self.ai = ai
 
-
         self.current_channel = None
         self.cookies = json.loads(open("D:\\data_base\\cookies.json", encoding="utf-8").read())
         
@@ -38,12 +37,6 @@ class AI_chat():
         
         
         super().__init__()
-        
-    # async def Edge_Chat_Bot(self , cookies):
-
-    #     bot = 
-        
-    #     return bot
         
     async def process_messages(self):
         while True:
@@ -99,42 +92,31 @@ class AI_chat():
             print(len(response))
             print((response))
             
-            char_limit = 2000
-            if len(response) > char_limit:
-                # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
-                if "```" in response:
-                    # Split the response if the code block exists
-                    parts = response.split("```")
-
-                    for i in range(len(parts)):
-                        if i % 2 == 0:  # indices that are even are not code blocks
-                            await message.followup.send(parts[i] , ephemeral= True if isPrivate == "True" else False)
-                        else:  # Odd-numbered parts are code blocks
-                            code_block = parts[i].split("\n")
-                            formatted_code_block = ""
-                            for line in code_block:
-                                while len(line) > char_limit:
-                                    # Split the line at the 50th character
-                                    formatted_code_block += line[:char_limit] + "\n"
-                                    line = line[char_limit:]
-                                formatted_code_block += line + "\n"  # Add the line and seperate with new line
-
-                            # Send the code block in a separate message
-                            if (len(formatted_code_block) > char_limit+100):
-                                code_block_chunks = [formatted_code_block[i:i+char_limit]
-                                                        or i in range(0, len(formatted_code_block), char_limit)]
-                                for chunk in code_block_chunks:
-                                    await message.followup.send(f"```{chunk}```" , ephemeral= True if isPrivate == "True" else False)
-                            
-                            await message.followup.send(f"```{formatted_code_block}```" , ephemeral= True if isPrivate == "True" else False)
-                else:
-                    
-                    response_chunks = [response[i:i+char_limit]
-                                    for i in range(0, len(response), char_limit)]
-                    for chunk in response_chunks:
-                        await message.followup.send(chunk , ephemeral= True if isPrivate == "True" else False)
+            char_limit = 1900
+            res_lenght = 0
+            res_mess = []
+            i = 0
+            res = ""
             
-            await message.followup.send(response , ephemeral= True if isPrivate == "True" else False)
+            if len(response) > char_limit:
+                temp = response.split('\n')
+                lenght = len(temp)
+                
+                while i < lenght-1:
+                    if temp[i].find('[') == -1 and temp[i].find(']') == -1:
+                    
+                        if len(res + temp[i]) < char_limit:
+                            res = res + temp[i] + '\n'
+                        else:
+                            res_mess.append(res)
+                            res = temp[i] + '\n'
+                    i=i+1
+
+                res_mess.append(res)
+                for mess in res_mess:
+                    await message.followup.send(mess , ephemeral= True if isPrivate == "True" else False)
+            else:
+                await message.followup.send(response , ephemeral= True if isPrivate == "True" else False)
         except Exception as e:
             await message.followup.send(f"> **ERROR: Something went wrong, please try again later!** \n ```ERROR MESSAGE: {e}```" , ephemeral= True if isPrivate == "True" else False)
 

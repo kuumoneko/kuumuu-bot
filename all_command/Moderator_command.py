@@ -93,7 +93,13 @@ class Moderator():
                 await ctx.response.send_message(f'Done' , ephemeral= True)
         else:
             raise MissingPermissions()
-
+        
+    async def warn(self , ctx : discord.Interaction , member : discord.Member , reason : str):
+        await member.send(f"You have been warned by {ctx.user.name}, reason: {reason}")
+        await ctx.response.send_message(content=f"{member.name} has been warned by you, reason: {reason}" , ephemeral=True)
+        
+    
+        
     async def unban(self , ctx: discord.Interaction):
         
         # await ctx.response.defer(thinking=True)
@@ -101,8 +107,6 @@ class Moderator():
     
         async for i in ctx.guild.bans():
             lmao.append(i)
-        
-        # temppp = ban_support(client= self.__client__ , ctx= ctx , list= lmao)
         
         tempp = ViewButton(client= self.__client__ , ctx= ctx , list= lmao )
         

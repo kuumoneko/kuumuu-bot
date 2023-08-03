@@ -116,6 +116,13 @@ async def chnick(ctx: discord.Interaction, member: discord.Member, *, name: str 
 async def chrole(ctx: discord.Interaction, member: discord.Member, role: discord.Role):
     await kclient.mod.chrole(ctx=ctx, member=member, role=role)
 
+@kclient.tree.command(name="warn" , description="Warn a member")
+@has_permissions(moderate_members = True)
+@app_commands.describe(member= "Who would you like to be called?")
+@app_commands.describe(reason= "Why would you do that?")
+async def warn(ctx : discord.Interaction , member : discord.Member , reason : str):
+    await kclient.mod.warn(ctx , member , reason)
+
 # ---------- Chat AI Command ----------
 
 @kclient.tree.command(name="chat", description="Have a chat with ChatGPT")
@@ -248,10 +255,9 @@ async def on_ready():
     
     kclient.support.get_notifi()
     kclient.support.get_emoji()
-    
-    # await kclient.send_start_prompt()
     await kclient.tree.sync()
     loop = asyncio.get_event_loop()
+    loop.create_task(kclient.support.update_database())
     loop.create_task(kclient.ai.__chatting__.process_messages())
     logger.info(f'{kclient.user} is now running!')
 

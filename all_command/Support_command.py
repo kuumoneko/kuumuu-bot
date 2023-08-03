@@ -53,7 +53,7 @@ class Support():
             
     def get_notifi(self):
         
-        kuumo = open("kuumuu_data/notification.txt" , "r+")
+        kuumo = open("D:\\data_base\\notifications.txt" , "r+")
         list_obj = kuumo.readlines()
         
         for it in list_obj:
@@ -65,6 +65,16 @@ class Support():
             # print(it)
             a , b = map(str , it.split(' '))
             self.notification[a] = b
+            
+    async def update_database(self):
+        while True:
+            kuumo = open("D:\\data_base\\notifications.txt" , "w+" , encoding="utf-8")
+            
+            for i in self.notification:
+                tmep = f"{i} {self.notification[i]}\n"
+                kuumo.write(tmep)
+            
+            await asyncio.sleep(0.1)
  
     def get_kuumo_color(self):
         mid = randrange(0 , len(self.kuumo_color)-1 , 1)
