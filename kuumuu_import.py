@@ -43,6 +43,7 @@ from typing import List
 from datetime import *
 from revChatGPT import *
 from Bard import Chatbot as BardChatBot
+import nacl
 
 import spotipy
 import spotipy.util as util
@@ -55,8 +56,6 @@ from all_command import *
 sys.path.append(os.path.abspath(os.path.join( os.path.pardir , 'data_base')))
 
 import config
-
-
 
 # import pkg_resources
 # from subprocess import call

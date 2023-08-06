@@ -1,0 +1,12 @@
+discord.py
+EdgeGPT
+pafy
+urllib3
+googletrans
+ffmpeg
+youtube_dl
+google_auth_oauthlib
+google-api-python-client
+revChatGPT
+Bard
+spotipy
