@@ -30,7 +30,7 @@ class Support():
         super().__init__()
 
 
-    def def_value():
+    def def_value(string):
         return "Not Present"
 
     def check_tin_juan(self, a : str):

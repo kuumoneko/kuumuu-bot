@@ -102,7 +102,7 @@ class Moderator():
         
     async def unban(self , ctx: discord.Interaction):
         
-        # await ctx.response.defer(thinking=True)
+        await ctx.response.defer(thinking=True)
         lmao = []
     
         async for i in ctx.guild.bans():
@@ -110,8 +110,15 @@ class Moderator():
         
         tempp = ViewButton(client= self.__client__ , ctx= ctx , list= lmao )
         
+        if len(lmao) <1:
+            embeb = discord.Embed(title="" , color=self.__client__.support.get_kuumo_color())
+            embeb.add_field(name="" , value=f"I can't find any banxed member in your server")
+            
+            await ctx.followup.send(embed= embeb)
+            
+            return
         
-        await ctx.response.send_message(view= tempp)
+        await ctx.followup.send(view= tempp)
         await temp(self= tempp , ctx= ctx)
 
 class ViewButton(View):
@@ -120,6 +127,7 @@ class ViewButton(View):
         self.ctx = ctx
         self.done = False
         self.curr_page = 0
+        self.bans = list
         self.bans_numb = len(list)
         self.page = self.bans_numb // 10 -1  if self.bans_numb % 10 == 0 else self.bans_numb//10 
         
@@ -134,18 +142,26 @@ class ViewButton(View):
         while(i < self.bans_numb):
             embed = Embed(title="" , color= self.__client__.support.get_kuumo_color())
             if (i % 10 == 0):
-                embed.add_field(name=" ", value=f'{i % 10 + 1}. {self.bans[i].user}' , inline= True)
+                embed.add_field(name=" ", value=f'{i % 10 + 1}. {self.bans[i].user}' , inline= False)
                 i=i+1
                 while(i % 10 != 0):
                     if i == self.bans_numb:
                         break
-                    embed.add_field(name="" , value=f'{i % 10 + 1}. {self.bans[i].user}' , inline= True)
+                    embed.add_field(name="" , value=f'{i % 10 + 1}. {self.bans[i].user}' , inline= False)
                     i=i+1
                 
+            lists.append(embed)
+            
+        if len(lists) == 0:
+            embed = Embed(title="" , color= self.__client__.support.get_kuumo_color())
+            embed.add_field(name="" , value="Your server doesn't have baned member now")
             lists.append(embed)
         
         return lists
 
+    @button(label="<<" , custom_id="1" , style= discord.ButtonStyle.blurple )
+    async def begin_page(self , ctx : discord.Interaction , butt_oj = Button):
+        self.curr_page = 0
     
     @button(label="<" , custom_id="2" , style= discord.ButtonStyle.blurple)
     async def previous_page(self , ctx : discord.Interaction , butt_oj = Button):
@@ -154,18 +170,16 @@ class ViewButton(View):
     @button(label=">" , custom_id="4" , style= discord.ButtonStyle.blurple)
     async def next_page(self , ctx : discord.Interaction , butt_oj = Button):
         self.curr_page = self.curr_page + 1
-    
-    @button(label="<<" , custom_id="1" , style= discord.ButtonStyle.blurple )
-    async def begin_page(self , ctx : discord.Interaction , butt_oj = Button):
-        self.curr_page = 0
-        
+
     @button(label=">>" , custom_id="5" , style= discord.ButtonStyle.blurple )
     async def end_page(self , ctx : discord.Interaction , butt_oj = Button):
         self.curr_page = self.page
         
     @button(label="X" , custom_id="3" , style= discord.ButtonStyle.red)
     async def end(self , ctx : discord.Interaction, butt_oj = Button):
+        
         self.done = True
+        self.stop()
         
     @select(placeholder="Choose your choice" , custom_id="input" , min_values=1 , max_values=1 ,options=[
                                                                                 discord.SelectOption(label=str(i) , value= str(i))
@@ -173,23 +187,26 @@ class ViewButton(View):
                                                                                         ])
     async def input(self , ctx : discord.Interaction , select):
         
-        moi = (ord(select.values[0]) - ord('1'))
+        numb = int( select.values[0])
+        numb = self.curr_page*10 + numb
         
-        temp = self.bans_page[self.curr_page].fields[moi].value[3:]
+        if numb > len(self.bans):
+            pass
+        
+        temp = self.bans[numb-1].user
+        
+        await ctx.guild.unban(temp)
+            
+        self.bans_numb = self.bans_numb - 1
+        
+        self.page = self.bans_numb // 10 -1  if self.bans_numb % 10 == 0 else self.bans_numb//10 
+        
+        if self.bans_numb == 0:
+            self.page = 0
+            
+        self.bans_page = self.get_options(ctx= ctx)
         
         
-        # print(temp)
-        
-        async for i in ctx.guild.bans():
-            if i.user.name == temp:
-                kuumo = Embed(title="" , color= self.__client__.support.get_kuumo_color())
-                kuumo.add_field(name="" , value=f"{i.user} has been unbaned by {ctx.user}")
-                await ctx.channel.send(embed=kuumo)
-
-                await ctx.guild.unban(i.user)
-                break
-        select.disabled = True
-        self.done = True
     
 async def temp(self : ViewButton, ctx : discord.Interaction):
         
@@ -209,6 +226,12 @@ async def temp(self : ViewButton, ctx : discord.Interaction):
         else:
             self.next_page.disabled = False
             self.end_page.disabled = False
+            
+        if self.curr_page > self.page:
+            self.curr_page = self.page-1
+            
+        if self.page == 0:
+            self.curr_page = 0
             
         await ctx.edit_original_response(embed=self.bans_page[self.curr_page] , view= self)
         

@@ -45,6 +45,8 @@ from revChatGPT import *
 from Bard import Chatbot as BardChatBot
 import nacl
 
+import pycord
+
 import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
