@@ -114,39 +114,19 @@ class Moderator():
         await ctx.response.send_message(view= tempp)
         await temp(self= tempp , ctx= ctx)
 
-class input(TextInput):
-    def __init__(self , client) -> None:
-        self.client = client
-         
-        
-        super().__init__(label="" , style= TextStyle.short , custom_id="input bans", placeholder="Input Your Chõie")
-        
-    async def call_back(self, interaction: discord.Interaction):
-        self.client.done = True
-        print("Done")
-        # return await super().callback(interaction)
-        
 class ViewButton(View):
     def __init__(self, client : Moderator , ctx : discord.Interaction , list:list , timeout: float | None = 180):
         self.__client__ = client
         self.ctx = ctx
         self.done = False
         self.curr_page = 0
-        # self.sp = sp
-        
-        self.bans = list
-        
-        
-        self.bans_numb = len(self.bans)
+        self.bans_numb = len(list)
         self.page = self.bans_numb // 10 -1  if self.bans_numb % 10 == 0 else self.bans_numb//10 
         
         
         self.bans_page = self.get_options(self.ctx)
         
         super().__init__(timeout=timeout)
-        
-        # self.add_item(input(client= self))
-        
     def get_options(self , ctx : discord.Interaction):
         lists = []
                 
@@ -167,29 +147,29 @@ class ViewButton(View):
         return lists
 
     
-    @button(label="<" , custom_id="<" , style= discord.ButtonStyle.blurple)
+    @button(label="<" , custom_id="2" , style= discord.ButtonStyle.blurple)
     async def previous_page(self , ctx : discord.Interaction , butt_oj = Button):
         self.curr_page = self.curr_page - 1
 
-    @button(label=">" , custom_id=">" , style= discord.ButtonStyle.blurple)
+    @button(label=">" , custom_id="4" , style= discord.ButtonStyle.blurple)
     async def next_page(self , ctx : discord.Interaction , butt_oj = Button):
         self.curr_page = self.curr_page + 1
     
-    @button(label="<<" , custom_id="<<" , style= discord.ButtonStyle.blurple )
+    @button(label="<<" , custom_id="1" , style= discord.ButtonStyle.blurple )
     async def begin_page(self , ctx : discord.Interaction , butt_oj = Button):
-        self.curr_page = self.page
-        
-    
-    @button(label=">>" , custom_id=">>" , style= discord.ButtonStyle.blurple )
-    async def end_page(self , ctx : discord.Interaction , butt_oj = Button):
         self.curr_page = 0
         
+    @button(label=">>" , custom_id="5" , style= discord.ButtonStyle.blurple )
+    async def end_page(self , ctx : discord.Interaction , butt_oj = Button):
+        self.curr_page = self.page
+        
+    @button(label="X" , custom_id="3" , style= discord.ButtonStyle.red)
+    async def end(self , ctx : discord.Interaction, butt_oj = Button):
+        self.done = True
+        
     @select(placeholder="Choose your choice" , custom_id="input" , min_values=1 , max_values=1 ,options=[
-                                                                                discord.SelectOption(label="1" , value= "1"),
-                                                                                discord.SelectOption(label="2" , value= "2"),
-                                                                                discord.SelectOption(label="3" , value= "3"),
-                                                                                discord.SelectOption(label="4" , value= "4"),
-                                                                                discord.SelectOption(label="4" , value= "5")                   
+                                                                                discord.SelectOption(label=str(i) , value= str(i))
+                                                                                    for i in range(1 , 11)               
                                                                                         ])
     async def input(self , ctx : discord.Interaction , select):
         
@@ -208,8 +188,8 @@ class ViewButton(View):
 
                 await ctx.guild.unban(i.user)
                 break
+        select.disabled = True
         self.done = True
-        pass
     
 async def temp(self : ViewButton, ctx : discord.Interaction):
         
@@ -232,3 +212,11 @@ async def temp(self : ViewButton, ctx : discord.Interaction):
             
         await ctx.edit_original_response(embed=self.bans_page[self.curr_page] , view= self)
         
+    for child in self.children:
+        if child.__dict__['_rendered_row'] != 1:
+            temp = child.__dict__['_underlying']
+            temp.disabled = True
+            
+    await ctx.edit_original_response(content=f"Done", view= self)
+        
+    self.stop()
