@@ -68,7 +68,7 @@ You can use any cookies exxtension to get cookies
 This project exists thanks to all the people who contribute.
 
  <a href="https://github.com/kuumoneko/kuumuu-bot/graphs/contributors">
-  
- </a>
+  <img src="https://contrib.rocks/image?repo=kuumoneko/kuumuu-bot" />
+</a>
 
 </details>
