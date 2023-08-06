@@ -29,6 +29,15 @@ Download an extension for reading cookies
 You can use any cookies exxtension to get cookies
 ```
 
+# Get discord bot Token
+
+1. Go to https://discord.com/developers/applications/
+2. Chose your discord bot
+3. Chose `Bot`
+4. Chose `Reset Token` and follow the directions
+5. Go to `config.py`
+6. Paste your Token to variable named `Discord_TOKEN`
+
 # Get Bing AI cookies
 
 1. Go to https://bing.com/chat
