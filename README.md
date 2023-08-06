@@ -60,3 +60,15 @@ You can use any cookies exxtension to get cookies
 
 1. Go to `src.aclient`
 2. Replace `config.kuumuu_TOKEN` by `config.Discord_TOKEN`
+
+# Contributors
+
+</summary>
+
+This project exists thanks to all the people who contribute.
+
+ <a href="https://github.com/kuumoneko/kuumuu-bot/graphs/contributors">
+  
+ </a>
+
+</details>
