@@ -10,13 +10,9 @@
 
 # Usage
 
-1. Create a folder `data_base` (You will save discord token, bing AI cookies and google Bard cookies in this folder)
-
-## In data_base
-
-1> Create file named `__init__.py` (For import config.py)
-
-2> Create file named `config.py` (You will save your discord bot TOKEN here)
+## 1. Create a folder `data_base` (You will save discord token, bing AI cookies and google Bard cookies in this folder)
+## 2. Create file named `__init__.py` in `data_base` (For import config.py)
+## 3. Create file named `config.py` in `data_base (You will save your discord bot TOKEN here)
 ```
 Discord_TOKEN = "Your token here"
 
@@ -24,9 +20,7 @@ Secure_1PSID = ""
 
 Secure_1PSIDTS = ""
 ```
-
-3> Create file named `cookies.json` (You will save Bing AI cookies here)
-
+## 4 Create file named `cookies.json` (You will save Bing AI cookies here)
 
 ## Setup cookies extension
 
