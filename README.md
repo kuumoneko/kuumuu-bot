@@ -12,7 +12,7 @@
 
 1. Create a folder `data_base` (You will save discord token, bing AI cookies and google Bard cookies in this folder)
 2. Create file named `__init__.py` in `data_base` (For import config.py)
-3. Create file named `config.py` in `data_base (You will save your discord bot TOKEN here)
+3. Create file named `config.py` in `data_base` (You will save your discord bot TOKEN here)
 ```
 Discord_TOKEN = "Your token here"
 
@@ -46,3 +46,8 @@ You can use any cookies exxtension to get cookies
 5. Go to `config.py`
 6. Paste value of `Secure_1PSID` to variable named `Secure_1PSID`
 7. Paste value of `Secure_1PSIDTS` to variable named `Secure_1PSIDTS`
+
+# Set up other file in main
+
+1. Go to `src.aclient`
+2. Replace `config.kuumuu_TOKEN` by `config.Discord_TOKEN`
