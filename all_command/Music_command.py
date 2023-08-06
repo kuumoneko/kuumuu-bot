@@ -204,8 +204,15 @@ class Music():
 
             if(voice_clientt.is_connected() == False):
                 return
+            
+        
 
             url = curr_list[0]
+            
+            if url == None:
+                curr_list.popleft()
+                continue
+            
             temp = "https://www.youtube.com/watch?v="+url
             
             # print(curr_list)
@@ -350,8 +357,6 @@ class Music():
             
         await ctx.response.send_message(f'Your track has been change Loop to: {loop.value}')
         
-
-        
     async def resume(self , ctx: discord.Interaction):
         voice_clientt = await self.__connecting__(ctx= ctx)
         if voice_clientt.is_paused():
@@ -371,6 +376,129 @@ class Music():
 
         await ctx.response.send_message(f"I have been leaved")
         
+    async def queue(self , ctx:discord.Interaction , id : int):
+        
+        await ctx.response.defer(thinking= True)
+        lists = []
+        
+        for i in self.__ctrack__[id]:
+            lists.append(i)
+            
+        tempp   = Show_queue(client= self , ctx= ctx , list= lists)
+        
+        
+        await ctx.followup.send(view= tempp)
+        
+        await temp(self=tempp , ctx= ctx)
+
+class Show_queue(View):
+    def __init__(self, client : Music , ctx : discord.Interaction , list:list , timeout: float | None = 180):
+        self.__client__ = client
+        self.ctx = ctx
+        self.done = False
+        self.curr_page = 0  
+        self.bans = list
+        self.bans_numb = len(list)
+        self.page = self.bans_numb // 10 -1  if self.bans_numb % 10 == 0 else self.bans_numb//10 
+        self.bans_page = self.get_options()
+        
+        super().__init__(timeout=timeout)
+        
+    def get_track(self , url:str):
+        
+        
+        temp = "https://www.youtube.com/watch?v="+url
+        
+        request = self.__client__.__ytb__.videos().list(
+            part="snippet,contentDetails,statistics",
+            id=url
+        )
+        response =  request.execute()
+        i = response["items"][0]
+                
+        return i['snippet']['title']
+        
+    def get_options(self):
+        lists = []
+                
+        i = 0
+        while(i < self.bans_numb):
+            embed = Embed(title="" , color= self.__client__.__client__.support.get_kuumo_color())
+            if (i % 10 == 0):
+                embed.add_field(name=" ", value=f'{i % 10 + 1 + 10*len(lists)}. {self.get_track(url= self.bans[i])}' , inline= True)
+                i=i+1
+                while(i % 10 != 0):
+                    if i == self.bans_numb:
+                        break
+                    embed.add_field(name=" ", value=f'{i % 10 + 1 + 10*len(lists)}. {self.get_track(url= self.bans[i])}' , inline= True)
+                    i=i+1
+                
+            lists.append(embed)
+        
+        return lists
+
+    @button(label="<" , custom_id="2" , style= discord.ButtonStyle.blurple)
+    async def previous_page(self , ctx : discord.Interaction , butt_oj = Button):
+        self.curr_page = self.curr_page - 1
+
+    @button(label=">" , custom_id="4" , style= discord.ButtonStyle.blurple)
+    async def next_page(self , ctx : discord.Interaction , butt_oj = Button):
+        self.curr_page = self.curr_page + 1
+    
+    @button(label="<<" , custom_id="1" , style= discord.ButtonStyle.blurple )
+    async def begin_page(self , ctx : discord.Interaction , butt_oj = Button):
+        self.curr_page = 0
+        
+    @button(label=">>" , custom_id="5" , style= discord.ButtonStyle.blurple )
+    async def end_page(self , ctx : discord.Interaction , butt_oj = Button):
+        self.curr_page = self.page
+        
+    @button(label="X" , custom_id="3" , style= discord.ButtonStyle.red)
+    async def end(self , ctx : discord.Interaction, butt_oj = Button):
+        self.done = True
+        
+    @select(placeholder="Choose track that you want to delete" , custom_id="input" , min_values=1 , max_values=1 ,options=[
+                                                                                discord.SelectOption(label=str(i) , value= str(i))
+                                                                                    for i in range(1 , 11)               
+                                                                                        ])
+    async def input(self , ctx : discord.Interaction , select):
+        numb = int( select.values[0])
+        numb = self.curr_page*10 + numb
+        print("https://www.youtube.com/watch?v=" + self.__client__.__ctrack__[ctx.guild_id][numb-1])
+        
+        del self.__client__.__ctrack__[ctx.guild_id][numb-1]
+        
+        select.disabled = True
+        self.done = True
+    
+async def temp(self : Show_queue, ctx : discord.Interaction):
+        
+    while(self.done == False):
+        if self.curr_page == 0:
+            self.previous_page.disabled = True
+            self.begin_page.disabled = True
+        else:
+            self.previous_page.disabled = False
+            self.begin_page.disabled = False
+            
+        if self.curr_page == self.page:
+            self.next_page.disabled = True
+            self.end_page.disabled = True
+        else:
+            self.next_page.disabled = False
+            self.end_page.disabled = False
+            
+        await ctx.edit_original_response(embed=self.bans_page[self.curr_page] , view= self)
+    
+    for child in self.children:
+        if child.__dict__['_rendered_row'] != 1:
+            temp = child.__dict__['_underlying']
+            temp.disabled = True
+            
+    await ctx.edit_original_response(content=f"Done", view= self)
+        
+    self.stop()
+    
 class Search(discord.ui.View):
     def __init__(self , client , ctx : discord.Interaction, result : List):
         super().__init__(timeout=180)
@@ -423,3 +551,5 @@ class Search(discord.ui.View):
         await interaction.channel.send(embed=self.result[4])
         self.music.__isdone__ = True
         self.stop()
+        
+        

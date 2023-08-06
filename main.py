@@ -1,12 +1,11 @@
-
 import inspect
 from urllib.request import urlopen
 from kuumuu_import import *
 from kuumuu_bot import kclient
-# from all_command.Help_command import Help
 
 # --------- Utility Command ---------
 
+# @kclien(name="news" , description="News about this bot")
 @kclient.tree.command(name="news" , description="News about this bot")
 async def news(ctx: discord.Interaction):
     await kclient.ulti.news(ctx= ctx)
@@ -14,20 +13,6 @@ async def news(ctx: discord.Interaction):
 @kclient.tree.command(name="test" , description="tesing")
 @is_owner()
 async def test(ctx: discord.Interaction):
-
-    for group in kclient.help.helped:
-        print(f'{kclient.help.kuumo_help[group]}:')
-        for command in dir(group):
-            if command[0] != "_":
-                temp = kclient.tree.get_command(command)
-                print(f'  {temp.name}:')
-                if len(temp._params) == 0:
-                    print(f'    None')
-                    
-                for pram in temp._params:
-                    
-                    print(f'    {pram}   {temp._params[pram].description.message}')
-    
     return
 
 @kclient.tree.command(name="ping" , description="Check client's ping")
@@ -54,7 +39,6 @@ async def hello(ctx : discord.Interaction, member: discord.Member = None):
 async def setnotice(ctx : discord.Interaction , room: discord.TextChannel):
     await kclient.ulti.setnotice(ctx= ctx , room= room)
 
-
 # ---------- Help Command ----------
 
 @kclient.tree.command(name="help" , description="Auto support from client")
@@ -71,9 +55,9 @@ async def help(ctx : discord.Interaction , command_helped : str = None):
 async def ban(ctx: discord.Interaction, member: discord.Member, *, reason: str =None):
     await kclient.mod.ban(ctx=ctx, member=member, reason=reason)
 
-@kclient.tree.command(name="unban", description="Unban a member from your server")
+@kclient.tree.command(name="bans", description="Unban a member from your server")
 @has_permissions(administrator=True)
-async def unban(ctx: discord.Interaction): 
+async def bans(ctx: discord.Interaction): 
     await kclient.mod.unban(ctx=ctx )
 
 @kclient.tree.command(name="timeout", description="Timeout a member in your server")
@@ -246,6 +230,11 @@ async def setloop(ctx : discord.Interaction , loop : app_commands.Choice[str]):
 @app_commands.describe(mode = "What mode would be used")
 async def shuffle(ctx : discord.Interaction , mode : app_commands.Choice[str]):
     await kclient.music.shuffle(ctx= ctx , id= ctx.guild_id , mode= mode)
+    
+@kclient.tree.command(name="queue" ,description="Show the queue")
+async def queue(ctx: discord.Interaction):
+    await kclient.music.queue(ctx= ctx , id=ctx.guild_id)
+
 
 # ------- Main Bot ---------
 
@@ -320,7 +309,7 @@ async def on_message(ctx : discord.Message):
             image = attachment.url
             print(f"{image} {mess}  was sent by {ten}")
         elif "https://images-ext-1.discordapp.net" in ctx.content or "https://tenor.com/view/" in mess:
-            
+
             print(f"{mess} " , " was sent by ", ten)
     else:
         print(mess, " was sent by ", ten)
