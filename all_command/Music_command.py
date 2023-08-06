@@ -304,8 +304,7 @@ class Music():
         
     async def shuffle(self , ctx : discord.Interaction, id : int , mode : str):
         voice_clientt = await self.__connecting__(ctx= ctx)
-        
-        
+
         tracks = []
         
         curr_list = self.__ctrack__[id]
@@ -324,8 +323,7 @@ class Music():
         
         for i in tracks:
             self.__ctrack__[id].append(i)
-            
-        
+
         await self.play(ctx= ctx , id= id)
             
     
