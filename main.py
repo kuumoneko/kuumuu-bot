@@ -234,6 +234,12 @@ async def shuffle(ctx : discord.Interaction , mode : app_commands.Choice[str]):
 @kclient.tree.command(name="queue" ,description="Show the queue")
 async def queue(ctx: discord.Interaction):
     await kclient.music.queue(ctx= ctx , id=ctx.guild_id)
+    
+@kclient.tree.command(name="nplay" , description="Show the current playing track")
+async def nplay(ctx : discord.Interaction):
+    
+    await kclient.music.nplay(ctx= ctx, id= ctx.guild_id)
+
 
 
 # ------- Main Bot ---------
@@ -244,7 +250,7 @@ async def on_ready():
     kclient.support.get_notifi()
     kclient.support.get_emoji()
     await kclient.tree.sync()
-    loop = asyncio.get_event_loop()
+    loop = asyncio.get_event_loop() 
     loop.create_task(kclient.support.update_database())
     loop.create_task(kclient.ai.__chatting__.process_messages())
     logger.info(f'{kclient.user} is now running!')

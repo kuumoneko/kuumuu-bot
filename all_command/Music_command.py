@@ -21,6 +21,15 @@ class Music():
         self.__ctrack__ = defaultdict(self.__def_music__)
         self.__ptrack__ = defaultdict(self.__def_music__)
         
+        self.__curr_ctrack__ = defaultdict(self.__def_music_support__)
+        self.__user__ = defaultdict(self.__def_music_support__)
+        self.__duration__ = defaultdict(self.__def_music_support__)
+        
+        self.__start__ = defaultdict(self.__def_music_support__)
+        self.__end__ = defaultdict(self.__def_music_support__)
+        
+        self.__now__= defaultdict(self.__def_music_support__)
+        
         self.__isloop__ = defaultdict(self.__def_music_support__)
         
         self.__isdone__ = defaultdict(self.__def_music_support__)
@@ -31,42 +40,7 @@ class Music():
         return deque([])
     
     def __def_music_support__(num : int):
-        return None
-    
-    async def __change_time__(self , string : str):
-        check_list = ["D" , "H" , "M" , "S"]
-        res = ""
-        for char in check_list:
-            temp = string.find(char)
-            strtemp = ""
-            if temp == -1:
-                continue
-            if (temp != -1):
-                strtemp = string[ (temp-3)  : (temp-len(string))   ]
-                
-            k = len(strtemp)-1
-            while(ord(strtemp[k]) >= 48 and ord(strtemp[k]) <= 57 and k > 0 ):
-                k-=1
-
-            for i in range (60 , 96):
-                strtemp = strtemp.strip(chr(i))
-            for i in range(97 , 123):
-                strtemp = strtemp.strip(chr(i))
-                
-            if k != 0:
-                strtemp = strtemp[  len(strtemp) - k  :  ]
-            
-            if strtemp != "":
-                if (char == "D"):
-                    res += strtemp + " days "
-                if (char == "H"):
-                    res += strtemp + " hours "
-                if (char == "M"):
-                    res += strtemp + " minutes "
-                if (char == "S"):
-                    res += strtemp + " seconds "
-        
-        return res
+        return None  
 
     async def __add_to_queue__(self , ctx: discord.Interaction , url: str = None , query: str = None , list_url:str = None):
         embeb = discord.Embed(title="" , color= self.__client__.support.get_kuumo_color())
@@ -99,6 +73,13 @@ class Music():
                 i = response1["items"][0]
                 
                 link = i['id']
+                
+                
+                
+                start = datetime.datetime.now().replace(microsecond=0)
+                end = datetime.datetime.now() + isoduration.parse_duration(i['contentDetails']['duration'])
+                end = end.replace(microsecond=0)
+                duration = end - start
 
                 embeb1.set_thumbnail(url= i['snippet']['thumbnails']['default']['url'])
 
@@ -109,18 +90,18 @@ class Music():
                 embeb1.add_field(name="Viewers: " , value= i['statistics']['viewCount'] , inline= True)
                 embeb1.add_field(name="Likers: " , value= i['statistics']['likeCount'] , inline= True)
 
-                embeb1.add_field(name="Duration: " , value=await self.__change_time__(i['contentDetails']['duration']) , inline= True)
+                embeb1.add_field(name="Duration: " , value= duration , inline= True)
                 
                 lists.append(embeb1)
                 if (cnt == 5):
                     break
-                
+                    
             await ctx.followup.send(view= Search( ctx= ctx , client= self ,result= lists) )
 
             return
             
         elif url != None:
-            self.__ctrack__[ctx.guild_id].append(url[len(url) - 11:])
+            self.__ctrack__[ctx.guild_id].append({'url' :url[len(url) - 11:] , 'user': ctx.user.name  })
             embeb1 = Embed(title=f"Track's info" , color= self.__client__.support.get_kuumo_color())
             embeb1.add_field(name="" , value=f"Track have been added to queue")
             await ctx.followup.send(embed= embeb1)
@@ -145,7 +126,7 @@ class Music():
             while(temp != None):
                 for i in response['items']:
                     if i['snippet']['title'] != 'Deleted video' and i['snippet']['title'] != "Private video":
-                        self.__ctrack__[ctx.guild_id].append(i['snippet']['resourceId']['videoId'])
+                        self.__ctrack__[ctx.guild_id].append({'url' : i['snippet']['resourceId']['videoId'] , 'user' : ctx.user.name })
                         cnt+=1
                         
                 request = self.__ytb__.playlistItems().list(
@@ -159,7 +140,7 @@ class Music():
 
             for i in response['items']:
                 if i['snippet']['title'] != 'Deleted video' and i['snippet']['title'] != "Private video":
-                    self.__ctrack__[ctx.guild_id].append(i['snippet']['resourceId']['videoId'])
+                    self.__ctrack__[ctx.guild_id].append({'url' : i['snippet']['resourceId']['videoId'] , 'user' : ctx.user.name })
                     cnt+=1
                         
             # embeb1.add_field(name="Warning: " , value=f"The feature is not currently activated. Please contact <@950354453033263175> or `mod` for assistance")
@@ -184,8 +165,8 @@ class Music():
                 voice_clientt = await channel.connect()
         else:
             voice_clientt = await channel.connect() 
-        return voice_clientt
-
+        return voice_clientt    
+    
     async def play(self , ctx : discord.Interaction , id:int):
         '''
             pramater:
@@ -205,13 +186,10 @@ class Music():
             if(voice_clientt.is_connected() == False):
                 return
             
-        
-
-            url = curr_list[0]
+            track = curr_list[0]
             
-            if url == None:
-                curr_list.popleft()
-                continue
+            url = track['url']
+            user = track['user']
             
             temp = "https://www.youtube.com/watch?v="+url
             
@@ -228,28 +206,28 @@ class Music():
                 
             voice_clientt.play(tempp)
             
-            embeb1 = Embed(title=f"Track's info" , color= self.__client__.support.get_kuumo_color())
             request = self.__ytb__.videos().list(
                 part="snippet,contentDetails,statistics",
                 id=url
             )
             response =  request.execute()
-            i = response["items"][0]
+            video = response["items"][0]
             
-            embeb1.set_thumbnail(url= i['snippet']['thumbnails']['default']['url'])
-
-            embeb1.add_field(name="Track's Name: " , value= i['snippet']['title'] , inline= True)
-            embeb1.add_field(name="Channel: " , value=  i['snippet']['channelTitle'] , inline= False )
-
-            embeb1.add_field(name="Viewers: " , value= i['statistics']['viewCount'] , inline= True)
-            embeb1.add_field(name="Likers: " , value= i['statistics']['likeCount'] , inline= True)
-            embeb1.add_field(name="Duration: " , value=await self.__change_time__(i['contentDetails']['duration']) , inline= True)
-            
-            await ctx.channel.send(embed= embeb1)
+            self.__start__[id] = datetime.datetime.now().replace(microsecond=0)
+            self.__end__[id] = datetime.datetime.now() + isoduration.parse_duration(video['contentDetails']['duration'])
+            self.__end__[id] = self.__end__[id].replace(microsecond=0)
+            self.__duration__[id] = self.__end__[id] - self.__start__[id]
+            self.__now__[id] = datetime.timedelta(days=0 , hours= 0  , minutes= 0 , seconds=0)
+            self.__curr_ctrack__[id]  = video
+            self.__user__[id] = user
             
             while voice_clientt.is_playing() or voice_clientt.is_paused():
+                
                 await asyncio.sleep(1.0)
-            
+                
+                if voice_clientt.is_playing():
+                    self.__now__[id] += datetime.timedelta(seconds=1)
+                
             if len(curr_list)>0:
                 if self.__isloop__[id] == False:
                     pre_list.append(curr_list[0])
@@ -259,6 +237,26 @@ class Music():
                 
             curr_list = self.__ctrack__[id]  
         return
+    
+    async def nplay(self , ctx:discord.Interaction , id : int):
+        
+        await ctx.response.defer(thinking=True)
+        video = self.__curr_ctrack__[id]
+        
+        embeb = Embed(title="" , color= self.__client__.support.get_kuumo_color())
+        
+        embeb.set_thumbnail(url= video['snippet']['thumbnails']['default']['url'])
+
+        embeb.add_field(name="Track's Name: " , value= video['snippet']['title'] , inline= True)
+        # embeb.add_field(name="Link:" , value=video['id'] , inline= True)
+        embeb.add_field(name="Channel: " , value=  video['snippet']['channelTitle'] , inline= False )
+        embeb.add_field(name="Viewers: " , value= video['statistics']['viewCount'] , inline= True)
+        embeb.add_field(name="Likers: " , value= video['statistics']['likeCount'] , inline= True)
+        embeb.add_field(name="User: " , value=f'{self.__user__[id]}' , inline=True)
+        embeb.add_field(name="Duration:" , value= self.__duration__[id] , inline=True)
+        embeb.add_field(name="Real time: " , value= f"{self.__now__[id]} / {self.__duration__[id]} ", inline= True)
+
+        await ctx.followup.send(embed=embeb)
     
     async def ntrack(self , ctx : discord.Interaction , id:int):
         '''
@@ -375,7 +373,7 @@ class Music():
         await ctx.response.send_message(f"I have been leaved")
         
     async def queue(self , ctx:discord.Interaction , id : int):
-        
+        await ctx.response.defer(thinking= True)
         if len(self.__ctrack__[id]) <1:
             embeb = discord.Embed(title="" , color=self.__client__.support.get_kuumo_color())
             embeb.add_field(name="" , value=f"I can't find any track in queue")
@@ -384,11 +382,11 @@ class Music():
             
             return
         
-        await ctx.response.defer(thinking= True)
+        
         lists = []
         
         for i in self.__ctrack__[id]:
-            lists.append(i)
+            lists.append(i['url'])
             
         tempp   = Show_queue(client= self , ctx= ctx , list= lists)
         
@@ -551,35 +549,35 @@ class Search(discord.ui.View):
         
     @discord.ui.button(label="Track 1", custom_id= "1" ,  style=discord.ButtonStyle.primary)
     async def first_button_callback(self,  interaction : discord.Interaction , button : ui.Button):
-        self.music.__ctrack__[interaction.guild_id].append(self.result[0].fields[1].value)
+        self.music.__ctrack__[interaction.guild_id].append({'url' :self.result[0].fields[1].value , 'user' : interaction.user.name })
         self.music.__isdone__ = True
         await interaction.channel.send(embed=self.result[0])
         self.stop()
     
     @discord.ui.button(label="Track 2", custom_id= "2" ,  style=discord.ButtonStyle.primary)
     async def second_button_callback(self,  interaction : discord.Interaction , button):
-        self.music.__ctrack__[interaction.guild_id].append(self.result[1].fields[1].value)
+        self.music.__ctrack__[interaction.guild_id].append({'url' :self.result[1].fields[1].value , 'user' : interaction.user.name })
         self.music.__isdone__ = True
         await interaction.channel.send(embed=self.result[1])
         self.stop()
         
     @discord.ui.button(label="Track 3", custom_id= "3" ,  style=discord.ButtonStyle.primary)
     async def third_button_callback(self,  interaction : discord.Interaction , button):
-        self.music.__ctrack__[interaction.guild_id].append(self.result[2].fields[1].value)
+        self.music.__ctrack__[interaction.guild_id].append({'url' :self.result[2].fields[1].value , 'user' : interaction.user.name })
         self.music.__isdone__ = True
         await interaction.channel.send(embed=self.result[2])
         self.stop()
 
     @discord.ui.button(label="Track 4", custom_id= "4" ,  style=discord.ButtonStyle.primary)
     async def four_button_callback(self,  interaction : discord.Interaction , button):
-        self.music.__ctrack__[interaction.guild_id].append(self.result[3].fields[1].value)
+        self.music.__ctrack__[interaction.guild_id].append({'url' :self.result[3].fields[1].value , 'user' : interaction.user.name })
         await interaction.channel.send(embed=self.result[3])
         self.music.__isdone__ = True
         self.stop()
         
     @discord.ui.button(label="Track 5", custom_id= "5" ,  style=discord.ButtonStyle.primary)
     async def five_button_callback(self,  interaction : discord.Interaction , button):
-        self.music.__ctrack__[interaction.guild_id].append(self.result[4].fields[1].value)
+        self.music.__ctrack__[interaction.guild_id].append({'url' :self.result[4].fields[1].value , 'user' : interaction.user.name })
         await interaction.channel.send(embed=self.result[4])
         self.music.__isdone__ = True
         self.stop()

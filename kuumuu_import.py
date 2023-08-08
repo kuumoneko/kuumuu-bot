@@ -8,6 +8,8 @@ from googletrans import Translator
 from random import *
 import discord.ext.commands
 import datetime
+import isoduration
+import isodate
 import ffmpeg
 from discord import FFmpegPCMAudio, PCMVolumeTransformer
 import youtube_dl
@@ -40,7 +42,6 @@ from EdgeGPT.EdgeGPT import ConversationStyle
 from src.auto_login.AutoLogin import MicrosoftBingAutoLogin
 from collections import deque
 from typing import List
-from datetime import *
 from revChatGPT import *
 from Bard import Chatbot as BardChatBot
 import nacl

@@ -25,8 +25,8 @@ class Ulitlity():
         await interaction.followup.send(embed= embeb)
         
     async def hello(self , ctx : discord.Interaction , member:discord.Member = None):
-        time = datetime.now
-        hou = time().hour
+        time = datetime.datetime.now()
+        hou = time.hour
         kuumo = "hello"
         kuumoid = self.__client__.support.emojii[kuumo]
         

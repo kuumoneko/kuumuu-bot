@@ -39,15 +39,15 @@ class Moderator():
             
             await ctx.response.send_message(embed=embed)
             if chara == "sec" or chara.startswith('second') :
-                await member.timeout( timedelta(seconds= numb))
+                await member.timeout( datetime. timedelta(seconds= numb))
             elif chara == "min" or chara.startswith('minute'):
-                await member.timeout(timedelta(minutes= numb) ) 
+                await member.timeout(datetime.timedelta(minutes= numb) ) 
             elif chara == "hou" or chara.startswith('hour'):
-                await member.timeout( timedelta(hours= numb) ) 
+                await member.timeout( datetime.timedelta(hours= numb) ) 
             elif chara == "ds" or chara.startswith('day'):
-                await member.timeout( timedelta(days= numb) ) 
+                await member.timeout( datetime.timedelta(days= numb) ) 
             elif chara == "we" or chara.startswith('week'):
-                await member.timeout( timedelta(weeks= numb) )
+                await member.timeout( datetime.timedelta(weeks= numb) )
                 
             await ctx.response.send_message(embed= embed) 
 
@@ -100,7 +100,7 @@ class Moderator():
         
     
         
-    async def unban(self , ctx: discord.Interaction):
+    async def bans(self , ctx: discord.Interaction):
         
         await ctx.response.defer(thinking=True)
         lmao = []
