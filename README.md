@@ -2,6 +2,11 @@
 
 > A discord bot by Kuumo using Python
 
+# Version 0.8.2
+
+> Fix some small bugs
+> Add `Auto update requirements`
+
 # Install
 
 ```
@@ -55,6 +60,10 @@ You can use any cookies exxtension to get cookies
 5. Go to `config.py`
 6. Paste value of `Secure_1PSID` to variable named `Secure_1PSID`
 7. Paste value of `Secure_1PSIDTS` to variable named `Secure_1PSIDTS`
+
+# Get ffmpeg
+1. Go to https://ffmpeg.org/download.html
+2. Download latest version for your OS system
 
 # Set up other file in main
 

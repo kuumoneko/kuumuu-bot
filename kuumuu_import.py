@@ -47,6 +47,7 @@ from Bard import Chatbot as BardChatBot
 import nacl
 
 import pycord
+import update
 
 import spotipy
 import spotipy.util as util
@@ -59,9 +60,3 @@ from all_command import *
 sys.path.append(os.path.abspath(os.path.join( os.path.pardir , 'data_base')))
 
 import config
-
-# import pkg_resources
-# from subprocess import call
-
-# packages = [dist.project_name for dist in pkg_resources.working_set]
-# call("pip install --upgrade " + ' '.join(packages), shell=True)

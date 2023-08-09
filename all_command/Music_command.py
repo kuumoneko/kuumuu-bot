@@ -410,7 +410,7 @@ class Show_queue(View):
         
     def get_track(self , url:str):
         
-        
+        # print(url)
         temp = "https://www.youtube.com/watch?v="+url
         
         request = self.__client__.__ytb__.videos().list(
@@ -484,7 +484,7 @@ class Show_queue(View):
         self.bans.clear()
         
         for i in self.__client__.__ctrack__[ctx.guild_id]:
-            self.bans.append(i)
+            self.bans.append(i['url'])
         
         self.bans_numb = self.bans_numb - 1
         self.page = self.bans_numb // 10 -1  if self.bans_numb % 10 == 0 else self.bans_numb//10 

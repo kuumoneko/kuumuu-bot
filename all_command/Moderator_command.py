@@ -59,7 +59,7 @@ class Moderator():
             emmeb = discord.Embed(title='' , color= self.__client__.support.get_kuumo_color())
             emmeb.add_field(name='' , value=f'{member} has been untimeout by {ctx.user}')
             await ctx.response.send_message(embed=emmeb)
-            await member.untimeout()
+            await member.timeout(datetime.timedelta(seconds=0))
         else:
             raise MissingPermissions()
 

@@ -10,3 +10,5 @@ google-api-python-client
 revChatGPT
 Bard
 spotipy
+isoduration
+isodate

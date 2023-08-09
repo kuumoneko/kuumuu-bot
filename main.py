@@ -58,7 +58,7 @@ async def ban(ctx: discord.Interaction, member: discord.Member, *, reason: str =
 @kclient.tree.command(name="bans", description="Unban a member from your server")
 @has_permissions(administrator=True)
 async def bans(ctx: discord.Interaction): 
-    await kclient.mod.unban(ctx=ctx )
+    await kclient.mod.bans(ctx=ctx )
 
 @kclient.tree.command(name="timeout", description="Timeout a member in your server")
 @has_permissions(moderate_members = True)
@@ -165,30 +165,30 @@ async def ptrack(ctx: discord.Interaction):
 @app_commands.choices(shuffle=[
         app_commands.Choice(name="The next queue", value="1" ),
         app_commands.Choice(name="All track" ,value="2" ),
-        app_commands.Choice(name="No shuffle", value="3")
     ])
 @app_commands.describe(prompt= "Link Youtube or query to Search on Youtube")
 @app_commands.describe(isloop = "Do you want your track is repeated?")
 @app_commands.describe(shuffle = "What mode would be used?")
 async def play(ctx: discord.Interaction,
-                prompt : str,
-                isloop : app_commands.Choice[str] = "False", 
-                shuffle: app_commands.Choice[str] = "3" 
+                prompt : str = "None",
+                isloop : app_commands.Choice[str] = "None", 
+                shuffle: app_commands.Choice[str] = "None"
             ):
     await ctx.response.defer(thinking=True)
     
     if ctx.user.voice.channel == None:
+        ctx.followup.send(f"There is nothing to play :<")
         return
     
     list = None
     url = None
     query = None
-    
+
     if prompt.find('playlist?list=') != -1:
         list = prompt
     elif prompt.find('watch?=') != -1 or prompt.find('youtu.be/') != -1:
         url = prompt
-    else:
+    elif prompt != "None":
         query = prompt
     
     if (url != None or query != None or list != None):
@@ -200,7 +200,7 @@ async def play(ctx: discord.Interaction,
     
     if type(isloop) != str and isloop.value == "True":
         kclient.music.__isloop__[ctx.guild_id] = True
-    else:
+    elif type(isloop) != str and isloop.value == "False":
         kclient.music.__isloop__[ctx.guild_id] = False
         
     if type(shuffle) != str:
@@ -241,7 +241,6 @@ async def nplay(ctx : discord.Interaction):
     await kclient.music.nplay(ctx= ctx, id= ctx.guild_id)
 
 
-
 # ------- Main Bot ---------
 
 @kclient.event
@@ -257,10 +256,18 @@ async def on_ready():
 
 @kclient.event
 async def on_member_join(member):
-    temp = member.guild.id    
-    channel = kclient.get_channel(int( kclient.support.notification[str(temp)]) ) # replace with your channel ID
+    temp = member.guild.id 
+    
     role = discord.utils.get(member.guild.roles, name="member") # replace with your role name
     await member.add_roles(role)
+    
+    if kclient.support.notification[str(temp)] == None:
+        return
+        
+        
+       
+    channel = kclient.get_channel(int( kclient.support.notification[str(temp)]) ) # replace with your channel ID
+    
     embeb = discord.Embed(title="" , color= kclient.support.get_kuumo_color())
     embeb.add_field(name ='' ,value= f"Welcome to the server, {member.mention}! You have been given the {role} role.")
     await channel.send(embed= embeb)
@@ -268,6 +275,10 @@ async def on_member_join(member):
 @kclient.event
 async def on_member_remove(member : discord.Member):
     temp = member.guild.id
+    
+    if kclient.support.notification[str(temp)] == None:
+        return
+    
     channel = kclient.get_channel(int( kclient.support.notification[str(temp)]) ) # replace with your channel ID
     embeb = discord.Embed(title="" , color= kclient.support.get_kuumo_color())
     embeb.add_field(name = '' , value= f"Goodbye, {member.mention}! We'll miss you.")
@@ -280,7 +291,7 @@ async def on_voice_state_update( member, before, after):
     if member.id == kclient.user.id:
         return
     
-    if after.channel != before.channel:
+    if after.channel != before.channel and after.channel == None :
         # voice = 
         voice = get(kclient.voice_clients, guild=member.guild)
         cnt = 0
@@ -296,8 +307,22 @@ async def on_voice_state_update( member, before, after):
 
 @kclient.tree.error
 async def on_app_command_error(ctx: discord.Interaction, error):
-    await ctx.response.send_message(f"Something was wrong.\nError:\n ```{error}```\nPlease call my owner for helping!")
-    print(error)
+    try:
+        await ctx.response.send_message(f"Something was wrong.\nError:\n ```{error}```\nPlease call my owner for helping!")
+        
+    except:
+        
+        try: 
+            await ctx.followup.send(f"Something was wrong.\nError:\n ```{error}```\nPlease call my owner for helping!")
+        
+        except:
+                
+            try:
+                await ctx.edit_original_response(f"Something was wrong.\nError:\n ```{error}```\nPlease call my owner for helping!")
+                
+            except:
+                await ctx.channel.send(f"Something was wrong.\nError:\n ```{error}```\nPlease call my owner for helping!")
+    raise error
 
 @kclient.event
 async def on_message(ctx : discord.Message):
@@ -335,5 +360,7 @@ async def on_message(ctx : discord.Message):
     if kclient.user.mentioned_in(ctx):
         await ctx.channel.send('You mentioned me!')
             
-if __name__ == '__main__':    
+if __name__ == '__main__':
+    update.update()
+    
     kclient.run(kclient.TOKEN)
