@@ -5,6 +5,7 @@
 # Version 0.8.2
 
 > Fix some small bugs
+
 > Add `Auto update requirements`
 
 # Install
