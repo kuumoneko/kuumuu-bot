@@ -16,7 +16,7 @@ This is just a recommended configuration, and you may need to adjust it dependin
 
 Sure, here is a PC config that I would recommend for programming, running servers, and machine learning:
 
-* CPU: Intel Core i5 13600K
+* CPU: Intel Core i5 vxjhcvbxchvbxchvbjh
 * GPU: Nvidia GeForce RTX 3060
 * RAM: 32GB DDR4-3200
 * Motherboard: MSI B660M Mortar WiFi
