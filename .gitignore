@@ -167,3 +167,4 @@ kuumo_import.py
 README.md
 requirements.txt
 update.py
+all_command/__init__.py

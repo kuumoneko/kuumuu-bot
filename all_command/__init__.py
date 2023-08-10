@@ -7,5 +7,5 @@ all={
     Moderator_command,
     Ultility_command,
     Help_command,
-    Support_command
+    Support_command,
 }

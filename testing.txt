@@ -22,7 +22,7 @@ Sure, here is a PC config that I would recommend for programming, running server
 * Motherboard: MSI B660M Mortar WiFi
 * Storage: 1TB Samsung 980 Pro NVMe SSD + 2TB Seagate Barracuda HDD
 * Power Supply: Corsair RM850x
-* Case: NZXT H510i
+* Case: NZXT H510ishdbfkjsdgkjnfkj
 
 This configuration will give you plenty of power for programming, running servers, and machine learning. The CPU has 6 cores and 12 threads, which is perfect for multitasking. The GPU has 12GB of GDDR6 memory, which is enough for even the most demanding machine learning tasks. The RAM is 32GB, which is plenty for even the most demanding programming projects. The motherboard has all the features you need for a high-performance PC, including support for PCIe Gen 4, Wi-Fi 6, and Bluetooth 5. The storage is a mix of a fast NVMe SSD for your operating system and programs, and a large HDD for your data. The power supply is 850 watts, which is enough to power all of your components even under heavy load. The case is a mid-tower case with good airflow and cable management.
 
