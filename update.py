@@ -4,7 +4,7 @@ from subprocess import call
 import setuptools
 
 def get_update():
-    kuumo = open("D:\\data_base\\update_requirements.txt"  , "r" , encoding="utf-8")
+    kuumo = open("D:\\kuumuu-bot\\data_base\\update_requirements.txt"  , "r" , encoding="utf-8")
 
     inputt = kuumo.readlines()
     kuumo.close()
@@ -26,7 +26,7 @@ def get_update():
 def update(noww: datetime.datetime , latest_update : datetime.datetime):
 
     if noww - latest_update > datetime.timedelta(days=7):
-        call("pip list --outdated > D:\data_base\outdated.txt" , shell= True)
+        call("pip list --outdated > D:\kuumuu-bot\data_base\outdated.txt" , shell= True)
         
         call("pip install -U wheel" , shell=True)
         
@@ -34,7 +34,7 @@ def update(noww: datetime.datetime , latest_update : datetime.datetime):
         
         
         
-        with open("D:\data_base\outdated.txt",'r') as packages_file:
+        with open("D:\kuumuu-bot\data_base\outdated.txt",'r') as packages_file:
         #these two readline() for first 2 rows
             packages_file.readline()
             packages_file.readline()
@@ -48,7 +48,7 @@ def update(noww: datetime.datetime , latest_update : datetime.datetime):
                     print("Update-->",package_name)
                     call(f"pip install -U {package_name} " , shell=True)
                     
-        kuumo = open("D:\\data_base\\update_requirements.txt"  , "w" , encoding="utf-8")
+        kuumo = open("D:\\kuumuu-bot\\data_base\\update_requirements.txt"  , "w" , encoding="utf-8")
         
         kuumo.write(f"{noww.year}\n")
         kuumo.write(f"{noww.month}\n")

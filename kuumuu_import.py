@@ -60,6 +60,4 @@ from asgiref.sync import sync_to_async
 
 from all_command import *
 
-sys.path.append(os.path.abspath(os.path.join( os.path.pardir , 'data_base')))
-
-import config
+from data_base import config

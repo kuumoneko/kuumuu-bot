@@ -9,7 +9,9 @@ class Music():
         
         self.__api_service_name__ = "youtube"
         self.__api_version__ = "v3"
-        self.__client_secrets_file__ = "D:/data_base/client_secret_CLIENTID.json"
+        
+        self.path = "D:\\kuumuu-bot\\data_base\\"
+        self.__client_secrets_file__ =  self.path + "client_secret_CLIENTID.json"
         flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
         self.__client_secrets_file__, scopes)
     

@@ -25,7 +25,7 @@ class AI_chat():
         self.ai = ai
 
         self.current_channel = None
-        self.cookies = json.loads(open("D:\\data_base\\cookies.json", encoding="utf-8").read())
+        self.cookies = json.loads(open("D:\\kuumuu-bot\\data_base\\cookies.json", encoding="utf-8").read())
         
         self.edgechatbot = EdgeChatbot(cookies=self.cookies)
         

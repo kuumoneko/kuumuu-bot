@@ -53,7 +53,7 @@ class Support():
             
     def get_notifi(self):
         
-        kuumo = open("D:\\data_base\\notifications.txt" , "r+")
+        kuumo = open("D:\\kuumuu-bot\\data_base\\notifications.txt" , "r+")
         list_obj = kuumo.readlines()
         
         for it in list_obj:
@@ -68,7 +68,7 @@ class Support():
             
     async def update_database(self):
         while True:
-            kuumo = open("D:\\data_base\\notifications.txt" , "w+" , encoding="utf-8")
+            kuumo = open("D:\\kuumuu-bot\\data_base\\notifications.txt" , "w+" , encoding="utf-8")
             
             for i in self.notification:
                 tmep = f"{i} {self.notification[i]}\n"
