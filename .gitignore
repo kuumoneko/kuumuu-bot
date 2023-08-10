@@ -161,7 +161,4 @@ cython_debug/
 
 
 .vscode
-
-testing.json
-testing.py
-testing.txt
+testing
