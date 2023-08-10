@@ -257,7 +257,7 @@ async def on_ready():
     logger.info(f'{kclient.user} is now running!')
 
 @kclient.event
-async def on_member_join(member):
+async def on_member_join(member : discord.Member):
     temp = member.guild.id 
     
     role = discord.utils.get(member.guild.roles, name="member") # replace with your role name
@@ -265,7 +265,7 @@ async def on_member_join(member):
     
     if kclient.support.notification[str(temp)] == None:
         return
-        
+
     channel = kclient.get_channel(int( kclient.support.notification[str(temp)]) ) # replace with your channel ID
     
     embeb = discord.Embed(title="" , color= kclient.support.get_kuumo_color())

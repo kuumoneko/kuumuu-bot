@@ -65,7 +65,7 @@ class Ulitlity():
         await ctx.response.send_message(embed= embeb)
         
     async def setnotice(self , ctx :discord.Interaction , room: discord.TextChannel):
-        kuumo = open("kuumuu-bot\\data_base\\notifications.txt" , "w")
+        kuumo = open("D:\\kuumuu-bot\\data_base\\notifications.txt" , "w")
         
         temp = str(ctx.guild.id)
         self.__client__.support.notification[temp] = str(room.id)

@@ -31,7 +31,7 @@ class Support():
 
 
     def def_value(string):
-        return "Not Present"
+        return "None"
 
     def check_tin_juan(self, a : str):
 
@@ -58,12 +58,11 @@ class Support():
         
         for it in list_obj:
             it = it[ : -1]
-            # print(it , end= 'mói')
             if (len(it) < 1):
                 continue
             
-            # print(it)
             a , b = map(str , it.split(' '))
+                        
             self.notification[a] = b
             
     async def update_database(self):
