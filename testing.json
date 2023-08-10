@@ -1,80 +1,14 @@
 {
-    "kind": "youtube#video",
-    "etag": "_IXIeIVRpZV5jApNyIlu4Y1MMuo",
-    "id": "mivcDoTjpQE",
-    "snippet": {
-        "publishedAt": "2020-08-10T16:00:29Z",
-        "channelId": "UCrTqIAR1vOjaizO8HRk373Q",
-        "title": "200 Hour Countdown Timer Video \u2013 Longest Timer in the World on Youtube -",
-        "description": "200 Hour Countdown Timer Video The longest Timer in the World on Youtube - \n\n\n\nBuy a cool digital Timer: https://amzn.to/2RV6a5R\n\nMeine Youtube Ausr\u00fcstung:\nMeine Kamera: http://amzn.to/2o02UFQ\nMein Stativ: http://amzn.to/2o0blB9\nMein Greenscreen: http://amzn.to/2nenLZu\n\nFolgt mir auch auf Pinterest: https://www.pinterest.de/macpaverick/\n\nFacebook: https://www.facebook.com/MacPaverick/ \nTwitter: https://twitter.com/MacPaverick\n\nWenn euch das Video gef\u00e4llt, w\u00fcrde ich mich \u00fcber ein Like von euch freuen! \nAnsonsten folgt mir einfach weiter, oder abonniert mich und verpasst somit keins meiner Videos! \n-----------------------------------------------------------------------------------------------------------\n\nHinweis: \nBei diesem Video handelt es sich nur um eine Veranschaulichung. Keine Gew\u00e4hr auf Richtigkeit.\nDie Verwendung der gezeigten Inhalte geschieht auf eigene Gefahr.\n\n*Bei Links handelt es sich um Affiliate Links die mit dem Partnerprogramm von Amazon zusammenh\u00e4ngen. Diese dienen zur Orientierung und schnellem finden der Produkte und werden je nach Erfolg mit einer Provision ausgezahlt falls diese genutzt werden. Euch enstehen dadruch keine zus\u00e4tzlichen Kosten!",
-        "thumbnails": {
-            "default": {
-                "url": "https://i.ytimg.com/vi/mivcDoTjpQE/default.jpg",
-                "width": 120,
-                "height": 90
-            },
-            "medium": {
-                "url": "https://i.ytimg.com/vi/mivcDoTjpQE/mqdefault.jpg",
-                "width": 320,
-                "height": 180
-            },
-            "high": {
-                "url": "https://i.ytimg.com/vi/mivcDoTjpQE/hqdefault.jpg",
-                "width": 480,
-                "height": 360
-            },
-            "standard": {
-                "url": "https://i.ytimg.com/vi/mivcDoTjpQE/sddefault.jpg",
-                "width": 640,
-                "height": 480
-            },
-            "maxres": {
-                "url": "https://i.ytimg.com/vi/mivcDoTjpQE/maxresdefault.jpg",
-                "width": 1280,
-                "height": 720
-            }
-        },
-        "channelTitle": "Mac Paverick",
-        "tags": [
-            "200 hours",
-            "200 hours from now",
-            "200 hours timer",
-            "200 hours countdown",
-            "200 hours counter",
-            "200 hours of video\n200 hours video\n200 hour\nTimer\nCountdown\nVideo\nlongest timer",
-            "longest timer set",
-            "longest time in the world",
-            "the longest time",
-            "200 hour minecraft video",
-            "longest timer in the world",
-            "200 hour timer",
-            "200 hour time lapse",
-            "200 hour countdown",
-            "200 stunden video",
-            "200 stunden"
-        ],
-        "categoryId": "26",
-        "liveBroadcastContent": "none",
-        "defaultLanguage": "de",
-        "localized": {
-            "title": "200 Hour Countdown Timer Video \u2013 Longest Timer in the World on Youtube -",
-            "description": "200 Hour Countdown Timer Video The longest Timer in the World on Youtube - \n\n\n\nBuy a cool digital Timer: https://amzn.to/2RV6a5R\n\nMeine Youtube Ausr\u00fcstung:\nMeine Kamera: http://amzn.to/2o02UFQ\nMein Stativ: http://amzn.to/2o0blB9\nMein Greenscreen: http://amzn.to/2nenLZu\n\nFolgt mir auch auf Pinterest: https://www.pinterest.de/macpaverick/\n\nFacebook: https://www.facebook.com/MacPaverick/ \nTwitter: https://twitter.com/MacPaverick\n\nWenn euch das Video gef\u00e4llt, w\u00fcrde ich mich \u00fcber ein Like von euch freuen! \nAnsonsten folgt mir einfach weiter, oder abonniert mich und verpasst somit keins meiner Videos! \n-----------------------------------------------------------------------------------------------------------\n\nHinweis: \nBei diesem Video handelt es sich nur um eine Veranschaulichung. Keine Gew\u00e4hr auf Richtigkeit.\nDie Verwendung der gezeigten Inhalte geschieht auf eigene Gefahr.\n\n*Bei Links handelt es sich um Affiliate Links die mit dem Partnerprogramm von Amazon zusammenh\u00e4ngen. Diese dienen zur Orientierung und schnellem finden der Produkte und werden je nach Erfolg mit einer Provision ausgezahlt falls diese genutzt werden. Euch enstehen dadruch keine zus\u00e4tzlichen Kosten!"
-        },
-        "defaultAudioLanguage": "en"
-    },
-    "contentDetails": {
-        "duration": "P8DT8H1S",
-        "dimension": "2d",
-        "definition": "sd",
-        "caption": "false",
-        "licensedContent": true,
-        "contentRating": {},
-        "projection": "rectangular"
-    },
-    "statistics": {
-        "viewCount": "3759537",
-        "likeCount": "71492",
-        "favoriteCount": "0",
-        "commentCount": "31206"
-    }
+    "text": "Sure, I can help you with that. There are many factors to consider when choosing a PC configuration for programming, running server and machine learning. Here are some general guidelines and recommendations based on the web search results:\n\n- Processor (CPU): You need a powerful CPU that can handle multiple tasks and run complex algorithms. For programming purposes, you want to start with at least an 8th Generation Intel\u00ae i7 processor or an AMD Ryzen\u2122 5000 series processor[^4^]. For machine learning and AI, you may want to consider a CPU platform that offers excellent reliability, memory performance, and PCI-Express lanes for multiple GPUs, such as Intel Xeon W or AMD Threadripper Pro[^1^].\n- Video Card (GPU): You need a GPU that can accelerate your machine learning and AI applications, especially if you are working with deep learning frameworks like PyTorch or TensorFlow. NVIDIA GPUs are the best supported in terms of machine learning libraries and integration with common frameworks[^3^]. You may want to look for GPUs that have high CUDA cores, memory bandwidth, and VRAM capacity, such as GeForce RTX 4070 Ti, RTX 4080, or RTX 4090[^2^].\n- Memory (RAM): You need enough RAM to store your data and run your programs smoothly. For programming purposes, you want to have at least 8GB of RAM[^5^]. For machine learning and AI, you may need more RAM depending on the size and complexity of your datasets and models. You may want to have at least 16GB of RAM, or even 32GB or 64GB if you are working with large-scale AI projects[^1^].\n- Storage (Drives): You need enough storage space to store your data and programs. For programming purposes, you may want to have at least 256GB of SSD storage for faster loading and booting times[^5^]. For machine learning and AI, you may need more storage space depending on the amount and type of data you are working with. You may want to have at least 1TB of SSD storage, or even 2TB or 4TB if you are working with big data[^1^]. You may also want to have a backup HDD drive for extra storage and security.\n\nBased on these guidelines, here is an example of a PC configuration that could suit your needs:\n\n- Processor: AMD Ryzen Threadripper Pro 3975WX\n- Video Card: NVIDIA GeForce RTX 4090\n- Memory: 64GB DDR4-3200\n- Storage: 2TB NVMe SSD + 4TB HDD\n\nI hope this helps you find the best PC configuration for your purposes. If you have any questions or feedback, please let me know. \ud83d\ude0a",
+    "author": "bot",
+    "sources": "[1]: https://www.pugetsystems.com/solutions/scientific-computing-workstations/machine-learning-ai/hardware-recommendations/ \"\"\n[2]: https://towardsai.net/p/news/best-workstations-for-deep-learning-data-science-and-machine-learning-ml-4a6e43213b9e \"\"\n[3]: https://www.run.ai/guides/gpu-deep-learning/best-gpu-for-deep-learning \"\"\n[4]: https://www.hp.com/us-en/shop/tech-takes/best-desktop-computer-programming-coding \"\"\n[5]: https://careerkarma.com/blog/computer-specs-for-programming/ \"\"\n\nSure, I can help you with that. There are many factors to consider when choosing a PC configuration for programming, running server and machine learning. Here are some general guidelines and recommendations based on the web search results:\n\n- Processor (CPU): You need a powerful CPU that can handle multiple tasks and run complex algorithms. For programming purposes, you want to start with at least an 8th Generation Intel\u00ae i7 processor or an AMD Ryzen\u2122 5000 series processor[^1^][4]. For machine learning and AI, you may want to consider a CPU platform that offers excellent reliability, memory performance, and PCI-Express lanes for multiple GPUs, such as Intel Xeon W or AMD Threadripper Pro[^2^][1].\n- Video Card (GPU): You need a GPU that can accelerate your machine learning and AI applications, especially if you are working with deep learning frameworks like PyTorch or TensorFlow. NVIDIA GPUs are the best supported in terms of machine learning libraries and integration with common frameworks[^3^][3]. You may want to look for GPUs that have high CUDA cores, memory bandwidth, and VRAM capacity, such as GeForce RTX 4070 Ti, RTX 4080, or RTX 4090[^4^][2].\n- Memory (RAM): You need enough RAM to store your data and run your programs smoothly. For programming purposes, you want to have at least 8GB of RAM[^5^][5]. For machine learning and AI, you may need more RAM depending on the size and complexity of your datasets and models. You may want to have at least 16GB of RAM, or even 32GB or 64GB if you are working with large-scale AI projects[^2^][1].\n- Storage (Drives): You need enough storage space to store your data and programs. For programming purposes, you may want to have at least 256GB of SSD storage for faster loading and booting times[^5^][5]. For machine learning and AI, you may need more storage space depending on the amount and type of data you are working with. You may want to have at least 1TB of SSD storage, or even 2TB or 4TB if you are working with big data[^2^][1]. You may also want to have a backup HDD drive for extra storage and security.\n\nBased on these guidelines, here is an example of a PC configuration that could suit your needs:\n\n- Processor: AMD Ryzen Threadripper Pro 3975WX\n- Video Card: NVIDIA GeForce RTX 4090\n- Memory: 64GB DDR4-3200\n- Storage: 2TB NVMe SSD + 4TB HDD\n\nI hope this helps you find the best PC configuration for your purposes. If you have any questions or feedback, please let me know. \ud83d\ude0a",
+    "sources_text": "Learn more: [1. www.hp.com](https://www.hp.com/us-en/shop/tech-takes/best-desktop-computer-programming-coding) [2. www.pugetsystems.com](https://www.pugetsystems.com/solutions/scientific-computing-workstations/machine-learning-ai/hardware-recommendations/) [3. www.run.ai](https://www.run.ai/guides/gpu-deep-learning/best-gpu-for-deep-learning) [4. towardsai.net](https://towardsai.net/p/news/best-workstations-for-deep-learning-data-science-and-machine-learning-ml-4a6e43213b9e) [5. careerkarma.com](https://careerkarma.com/blog/computer-specs-for-programming/)",
+    "suggestions": [
+        "What is the price of this configuration?",
+        "Can you recommend a laptop instead?",
+        "How do I assemble my own PC?"
+    ],
+    "messages_left": 29,
+    "max_messages": 30,
+    "adaptive_text": "[1]: https://www.pugetsystems.com/solutions/scientific-computing-workstations/machine-learning-ai/hardware-recommendations/ \"\"\n[2]: https://towardsai.net/p/news/best-workstations-for-deep-learning-data-science-and-machine-learning-ml-4a6e43213b9e \"\"\n[3]: https://www.run.ai/guides/gpu-deep-learning/best-gpu-for-deep-learning \"\"\n[4]: https://www.hp.com/us-en/shop/tech-takes/best-desktop-computer-programming-coding \"\"\n[5]: https://careerkarma.com/blog/computer-specs-for-programming/ \"\"\n\nSure, I can help you with that. There are many factors to consider when choosing a PC configuration for programming, running server and machine learning. Here are some general guidelines and recommendations based on the web search results:\n\n- Processor (CPU): You need a powerful CPU that can handle multiple tasks and run complex algorithms. For programming purposes, you want to start with at least an 8th Generation Intel\u00ae i7 processor or an AMD Ryzen\u2122 5000 series processor[^1^][4]. For machine learning and AI, you may want to consider a CPU platform that offers excellent reliability, memory performance, and PCI-Express lanes for multiple GPUs, such as Intel Xeon W or AMD Threadripper Pro[^2^][1].\n- Video Card (GPU): You need a GPU that can accelerate your machine learning and AI applications, especially if you are working with deep learning frameworks like PyTorch or TensorFlow. NVIDIA GPUs are the best supported in terms of machine learning libraries and integration with common frameworks[^3^][3]. You may want to look for GPUs that have high CUDA cores, memory bandwidth, and VRAM capacity, such as GeForce RTX 4070 Ti, RTX 4080, or RTX 4090[^4^][2].\n- Memory (RAM): You need enough RAM to store your data and run your programs smoothly. For programming purposes, you want to have at least 8GB of RAM[^5^][5]. For machine learning and AI, you may need more RAM depending on the size and complexity of your datasets and models. You may want to have at least 16GB of RAM, or even 32GB or 64GB if you are working with large-scale AI projects[^2^][1].\n- Storage (Drives): You need enough storage space to store your data and programs. For programming purposes, you may want to have at least 256GB of SSD storage for faster loading and booting times[^5^][5]. For machine learning and AI, you may need more storage space depending on the amount and type of data you are working with. You may want to have at least 1TB of SSD storage, or even 2TB or 4TB if you are working with big data[^2^][1]. You may also want to have a backup HDD drive for extra storage and security.\n\nBased on these guidelines, here is an example of a PC configuration that could suit your needs:\n\n- Processor: AMD Ryzen Threadripper Pro 3975WX\n- Video Card: NVIDIA GeForce RTX 4090\n- Memory: 64GB DDR4-3200\n- Storage: 2TB NVMe SSD + 4TB HDD\n\nI hope this helps you find the best PC configuration for your purposes. If you have any questions or feedback, please let me know. \ud83d\ude0a"
 }

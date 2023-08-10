@@ -2,11 +2,11 @@
 
 > A discord bot by Kuumo using Python
 
-# Version 0.8.2
+# Version 0.8.2=3
 
-> Fix some small bugs
+> Fix bug in `bing_handle_response`
 
-> Add `Auto update requirements`
+> Delete unused file
 
 # Install
 

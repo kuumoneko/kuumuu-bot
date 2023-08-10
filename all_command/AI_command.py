@@ -1,5 +1,7 @@
 from kuumuu_import import *
 
+# edgechatbot 
+
 class AI():
     def __init__(self , client) -> None:
         self.__client__ = client
@@ -81,16 +83,34 @@ class AI_chat():
             app_commands.Choice(name="Bing AI Precise" , value="Bing Precise"),
             app_commands.Choice(name="Google Bard" , value="Bard")
             '''
+            kuumo = open("D:\\kuumuu-bot\\testing.txt" , "w+" , encoding="utf-8")
             
+            kuumo.write(str(len(response)))
+            kuumo.write(response)
+            
+            # kuumo.close
+            print((response))
             
             while response.find("[^") != -1:
                 remp = response.find("[^")
                 temp = response[  remp     : (len(response) + 5 + remp) - len(response)  ]
                 response=  response.replace(temp , "")
+            
+            
+            while response.find("(^") != -1:
+                remp = response.find("(^")
+                temp = response[  remp     : (len(response) + 5 + remp) - len(response)  ]
+                response=  response.replace(temp , "")
                 
-                
-            print(len(response))
+            # print(len(response))
+            # kuumo = open("D:\\kuumuu-bot\\testing.txt" , "w+" , encoding="utf-8")
+            
+            kuumo.write(str(len(response)))
+            kuumo.write(response)
+            
+            kuumo.close
             print((response))
+            
             
             char_limit = 1900
             res_lenght = 0
@@ -103,7 +123,7 @@ class AI_chat():
                 lenght = len(temp)
                 
                 while i < lenght-1:
-                    if temp[i].find('[') == -1 and temp[i].find(']') == -1:
+                    if temp[i].find('[Image ') == -1 and temp[i].find(']') == -1:
                     
                         if len(res + temp[i]) < char_limit:
                             res = res + temp[i] + '\n'

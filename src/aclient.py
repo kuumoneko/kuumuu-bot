@@ -31,6 +31,3 @@ class aclient(discord.Client):
         self.tree = app_commands.CommandTree(self)
         self.activity = discord.Activity(
             type=discord.ActivityType.streaming, name="with kuumo:3")
-
-kuumoclient = aclient()
-

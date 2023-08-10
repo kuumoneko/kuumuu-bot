@@ -17,7 +17,7 @@ async def bard_handle_response(message, kclient) -> str:
     responseMessage = response["content"]
     return responseMessage
 
-async def bing_handle_response(message, kclient, conversation_style = ConversationStyle.balanced) -> str:
+async def bing_handle_response(message, kclient, conversation_style = ConversationStyle) -> str:
     try:
         response = await kclient.edgechatbot.ask(prompt = message,
                                             conversation_style = conversation_style,

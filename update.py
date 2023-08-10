@@ -3,10 +3,8 @@ import pkg_resources
 from subprocess import call
 import setuptools
 
-
-def update():
+def get_update():
     kuumo = open("D:\\data_base\\update_requirements.txt"  , "r" , encoding="utf-8")
-
 
     inputt = kuumo.readlines()
     kuumo.close()
@@ -18,12 +16,16 @@ def update():
     second = inputt[5]
     noww = datetime.datetime.now().replace(microsecond=0)
     latest_update = datetime.datetime(year=int(year) , month=int(month) , day= int(day) , hour=int(hour) , minute=int(minute) , second=int(second))
-    print(f"Now: {noww}")
-    print(f"Latest update: {latest_update}")
+    
+    return {
+        'now' : noww,
+        'latest' : latest_update
+    }
 
 
+def update(noww: datetime.datetime , latest_update : datetime.datetime):
 
-    if noww - latest_update > datetime.timedelta(days=1):
+    if noww - latest_update > datetime.timedelta(days=7):
         call("pip list --outdated > D:\data_base\outdated.txt" , shell= True)
         
         call("pip install -U wheel" , shell=True)

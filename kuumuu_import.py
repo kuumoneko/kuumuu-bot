@@ -45,6 +45,9 @@ from typing import List
 from revChatGPT import *
 from Bard import Chatbot as BardChatBot
 import nacl
+import pkg_resources
+from subprocess import call
+import setuptools
 
 import pycord
 import update

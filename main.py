@@ -1,11 +1,13 @@
 import inspect
 from urllib.request import urlopen
 from kuumuu_import import *
-from kuumuu_bot import kclient
+
+from src.aclient import aclient
+
+kclient = aclient()
 
 # --------- Utility Command ---------
 
-# @kclien(name="news" , description="News about this bot")
 @kclient.tree.command(name="news" , description="News about this bot")
 async def news(ctx: discord.Interaction):
     await kclient.ulti.news(ctx= ctx)
@@ -264,8 +266,6 @@ async def on_member_join(member):
     if kclient.support.notification[str(temp)] == None:
         return
         
-        
-       
     channel = kclient.get_channel(int( kclient.support.notification[str(temp)]) ) # replace with your channel ID
     
     embeb = discord.Embed(title="" , color= kclient.support.get_kuumo_color())
@@ -361,6 +361,17 @@ async def on_message(ctx : discord.Message):
         await ctx.channel.send('You mentioned me!')
             
 if __name__ == '__main__':
-    update.update()
     
+    kumo = update.get_update()
+    
+    now = kumo['now']
+    latest = kumo['latest']
+    
+    logger.info(f"Now: {now}")
+    logger.info(f"The latest update in: {latest}")
+    
+    print(f"## ---------------------------------------------------------------------------------------------- ##")
+    
+    
+    update.update(now , latest)
     kclient.run(kclient.TOKEN)
