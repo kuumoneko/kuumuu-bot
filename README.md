@@ -2,7 +2,7 @@
 
 > A discord bot by Kuumo using Python
 
-# Version 0.8.2=3
+# Version 0.8.3
 
 > Fix bug in `bing_handle_response`
 
