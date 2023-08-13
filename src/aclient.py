@@ -16,7 +16,7 @@ class aclient(discord.Client):
         self.Secure_1PSIDTS = config.Secure_1PSIDTS
         
         self.client = discord.Client(intents= intents)
-        self.bot = commands.Bot(command_prefix=';' , intents= intents)
+        self.bot = Bot(command_prefix=';' , intents= intents)
         
         
         self.music = Music_command.Music(client= self)

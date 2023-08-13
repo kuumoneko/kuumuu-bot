@@ -22,8 +22,8 @@ async def ping(ctx : discord.Interaction):
     await kclient.ulti.ping(interaction= ctx, ping=int((round(kclient.latency, 10)*1000)))
 
 @kclient.tree.command(name="trans" , description= "Translate like google translate")
-@app_commands.describe(lang= str("mói"))
-@app_commands.describe(string=str("lmao"))
+@describe(lang= "Language you want to translate to")
+@describe(string= "String you want to translate")
 async def trans(ctx : discord.Interaction, 
                 lang : str ,
                 string : str
@@ -31,100 +31,102 @@ async def trans(ctx : discord.Interaction,
     await kclient.ulti.trans(interaction=ctx, lang=lang  , thing= string)
 
 @kclient.tree.command(name="hello" , description="Say hello to you or other member in your server")
-@app_commands.describe(member = "Who would you like to be called?")
+@describe(member = "Who would you like to be called?")
 async def hello(ctx : discord.Interaction, member: discord.Member = None):
     await kclient.ulti.hello(ctx=ctx, member=member)
     
 @kclient.tree.command(name="setnotice" , description="Setup your notifications about member enter and leave your server channel for your server")
-@has_permissions(administrator = True)
-@app_commands.describe(room= "What room would you like to be called?")
+@default_permissions(administrator = True)
+# @default_permissions(Permissions.administrator)
+@describe(room= "What room would you like to be called?")
 async def setnotice(ctx : discord.Interaction , room: discord.TextChannel):
     await kclient.ulti.setnotice(ctx= ctx , room= room)
 
 # ---------- Help Command ----------
 
 @kclient.tree.command(name="help" , description="Auto support from client")
-@app_commands.describe(command_helped= "Command that you need help")
+@describe(command_helped= "Command that you need help")
 async def help(ctx : discord.Interaction , command_helped : str = None):
     await kclient.help.help(ctx= ctx , command= command_helped)
 
 # ---------- Moderator Command ----------
 
 @kclient.tree.command(name="ban", description="Ban a member from your server" )
-@has_permissions(ban_members=True)
-@app_commands.describe(member = "Who would you like to be called?")
-@app_commands.describe(reason = "Why would you do that?")
+@default_permissions(ban_members = True)
+@describe(member = "Who would you like to be called?")
+@describe(reason = "Why would you do that?")
 async def ban(ctx: discord.Interaction, member: discord.Member, *, reason: str =None):
     await kclient.mod.ban(ctx=ctx, member=member, reason=reason)
 
 @kclient.tree.command(name="bans", description="Unban a member from your server")
-@has_permissions(administrator=True)
+@default_permissions(administrator = True)
 async def bans(ctx: discord.Interaction): 
     await kclient.mod.bans(ctx=ctx )
 
 @kclient.tree.command(name="timeout", description="Timeout a member in your server")
-@has_permissions(moderate_members = True)
-@app_commands.choices(time=[
+@default_permissions(moderate_members = True)
+@choices(time=[
         app_commands.Choice(name="Second(S)", value="sec"),
         app_commands.Choice(name="Minute(s)", value="min"),
         app_commands.Choice(name="Hour(s)", value="hou"),
         app_commands.Choice(name="Day(s)", value="ds"),
         app_commands.Choice(name="Week(s)", value="we"),
     ])
-@app_commands.describe(member = "Who would you like to be called?")
-@app_commands.describe(number = "How long would you like to be used?")
-@app_commands.describe(time = "What would you like to be used?")
+@describe(member = "Who would you liske to be called?")
+@describe(number = "How long would you like to be used?")
+@describe(time = "What would you like to be used?")
 async def timeout(ctx : discord.Interaction, member: discord.Member, number: int, time: app_commands.Choice[str]):
     await kclient.mod.timeout(ctx=ctx, member=member, numb=number, string=time)
 
 @kclient.tree.command(name="untimeout", description="Untimeout a member in your server")
-@has_permissions(moderate_members = True)
-@app_commands.describe(member = "Whoe would you like to be called?")
+@default_permissions(moderate_members = True)
+@describe(member = "Whoe would you like to be called?")
 async def untimeout(ctx : discord.Interaction, member: discord.Member):
     await kclient.mod.untimeout(ctx=ctx, member=member)
 
 @kclient.tree.command(name="kick", description="Kick a member out of your server")
-@has_permissions(kick_members=True)
-@app_commands.describe(member = "Who would you like to be called?")
+@default_permissions(kick_members = True)
+@describe(member = "Who would you like to be called?")
 async def kick(ctx : discord.Interaction, member: discord.Member):
     await kclient.mod.kick(ctx=ctx, member=member)
 
 @kclient.tree.command(name="chnick", description="Change nickname for a member in your server")
-@app_commands.describe(member = "Who would you like to be called?")
-@app_commands.describe(name = "What name would you like to change?")
+@default_permissions(change_nickname = True)
+@describe(member = "Who would you like to be called?")
+@describe(name = "What name would you like to change?")
 async def chnick(ctx: discord.Interaction, member: discord.Member, *, name: str = None):
     await kclient.mod.chnick(ctx=ctx, member=member, name=name)
 
 @kclient.tree.command(name="chrole", description="Change role for a member in your server")
-@has_permissions(manage_roles=True)
-@app_commands.describe(member = "Who would you like to be called?")
-@app_commands.describe(role = "What role would you like to be called?")
+@default_permissions(manage_roles = True)
+@describe(member = "Who would you like to be called?")
+@describe(role = "What role would you like to be called?")
 async def chrole(ctx: discord.Interaction, member: discord.Member, role: discord.Role):
     await kclient.mod.chrole(ctx=ctx, member=member, role=role)
 
 @kclient.tree.command(name="warn" , description="Warn a member")
-@has_permissions(moderate_members = True)
-@app_commands.describe(member= "Who would you like to be called?")
-@app_commands.describe(reason= "Why would you do that?")
+@default_permissions(moderate_members = True)
+@describe(member= "Who would you like to be called?")
+@describe(reason= "Why would you do that?")
 async def warn(ctx : discord.Interaction , member : discord.Member , reason : str):
     await kclient.mod.warn(ctx , member , reason)
 
 # ---------- Chat AI Command ----------
 
 @kclient.tree.command(name="chat", description="Have a chat with ChatGPT")
-@app_commands.choices(isprivate=[
+@choices(isprivate=[
                 app_commands.Choice(name="True" , value= "True"),
                 app_commands.Choice(name= "False" , value= "False")
 ])
-@app_commands.choices(chatbot=[
+@choices(chatbot=[
                         app_commands.Choice(name="Bing AI Creative" , value="Bing Creative"),
                         app_commands.Choice(name="Bing AI Balanced" , value="Bing Balanced"),
                         app_commands.Choice(name="Bing AI Precise" , value="Bing Precise"),
                         app_commands.Choice(name="Google Bard" , value="Bard")
 ])
-@app_commands.describe(message = "What do you want to ask Kuumuu?")
-@app_commands.describe(isprivate = "Do you want to ask private?")
-@app_commands.describe(chatbot = "What chat bot you want to use?")
+@describe(message = "What do you want to ask Kuumuu?")
+@describe(isprivate = "Do you want to ask private?")
+@describe(chatbot = "What chat bot you want to use?")
 async def chat(ctx: discord.Interaction, message:str , isprivate : app_commands.Choice[str]  , chatbot: app_commands.Choice[str]):
     await kclient.ai.chat(ctx , message , isprivate.value , chatbot.value)
         
@@ -160,17 +162,17 @@ async def ptrack(ctx: discord.Interaction):
     await kclient.music.ptrack(ctx=ctx , id= ctx.guild_id)
     
 @kclient.tree.command(name="play" , description="Play a track")  
-@app_commands.choices(isloop=[
+@choices(isloop=[
         app_commands.Choice(name="True", value="True"),
         app_commands.Choice(name="False", value="False")
     ])
-@app_commands.choices(shuffle=[
+@choices(shuffle=[
         app_commands.Choice(name="The next queue", value="1" ),
         app_commands.Choice(name="All track" ,value="2" ),
     ])
-@app_commands.describe(prompt= "Link Youtube or query to Search on Youtube")
-@app_commands.describe(isloop = "Do you want your track is repeated?")
-@app_commands.describe(shuffle = "What mode would be used?")
+@describe(prompt= "Link Youtube or query to Search on Youtube")
+@describe(isloop = "Do you want your track is repeated?")
+@describe(shuffle = "What mode would be used?")
 async def play(ctx: discord.Interaction,
                 prompt : str = "None",
                 isloop : app_commands.Choice[str] = "None", 
@@ -216,20 +218,20 @@ async def play(ctx: discord.Interaction,
     await kclient.music.play(ctx= ctx , id= ctx.guild_id)
     
 @kclient.tree.command(name="setloop" , description="Set repeating for your music")
-@app_commands.choices(loop=[
+@choices(loop=[
         app_commands.Choice(name="True", value="True"),
         app_commands.Choice(name="False", value="False")
     ])
-@app_commands.describe(loop = "Do you want your track is repeated?")
+@describe(loop = "Do you want your track is repeated?")
 async def setloop(ctx : discord.Interaction , loop : app_commands.Choice[str]):
     await kclient.music.setloop(ctx , loop)
 
 @kclient.tree.command(name="shuffle" , description="Shuffle your track")
-@app_commands.choices(mode=[
+@choices(mode=[
         app_commands.Choice(name="The next queue", value="True" ),
         app_commands.Choice(name="All track" ,value="False" )
     ])
-@app_commands.describe(mode = "What mode would be used")
+@describe(mode = "What mode would be used")
 async def shuffle(ctx : discord.Interaction , mode : app_commands.Choice[str]):
     await kclient.music.shuffle(ctx= ctx , id= ctx.guild_id , mode= mode)
     

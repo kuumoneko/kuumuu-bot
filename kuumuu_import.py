@@ -61,3 +61,6 @@ from asgiref.sync import sync_to_async
 from all_command import *
 
 from data_base import config
+
+from discord.app_commands.commands import *
+from discord.permissions import Permissions

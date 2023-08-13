@@ -74,7 +74,7 @@ class Moderator():
             raise MissingPermissions()
 
     async def chnick(self , ctx : discord.Interaction, member: discord.Member , name : str):
-        if (member == ctx.user and ctx.permissions.manage_nicknames):
+        if (member == ctx.user and ctx.permissions.change_nickname):
             await member.edit(nick= name)
             await ctx.response.send_message(f'Done' , ephemeral= True)
         elif ctx.user.top_role > member.top_role and ctx.user.top_role != member.top_role and ctx.permissions.manage_nicknames:
