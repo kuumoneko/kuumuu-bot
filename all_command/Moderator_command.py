@@ -47,7 +47,10 @@ class Moderator():
             elif chara == "ds" or chara.startswith('day'):
                 await member.timeout( datetime.timedelta(days= numb) ) 
             elif chara == "we" or chara.startswith('week'):
-                await member.timeout( datetime.timedelta(weeks= numb) )      
+                await member.timeout( datetime.timedelta(weeks= numb) )
+                
+            # await ctx.response.send_message(embed= embed) 
+
         else:
             raise MissingPermissions()
             
